@@ -32,10 +32,11 @@ import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FormattedCharSequence;
 import net.minecraftforge.client.gui.widget.ForgeSlider;
 
 public final class GuiUtils {
@@ -102,59 +103,40 @@ public final class GuiUtils {
 	public static void endStencil() {
 		GL11.glDisable(GL11.GL_STENCIL_TEST);
 	}
-    
 
-	@SuppressWarnings("resource")
-    public static <W extends AbstractWidget> boolean renderTooltip(Screen screen, W widget, List<Component> lines, PoseStack stack, int mouseX, int mouseY) {
+    @SuppressWarnings("resource")
+    public static <W extends AbstractWidget, T extends FormattedText> boolean renderTooltip(Screen screen, W widget, List<T> lines, int maxWidth, PoseStack stack, int mouseX, int mouseY) {
         if (widget.isMouseOver(mouseX, mouseY)) {
-            screen.renderComponentTooltip(stack, lines, mouseX, mouseY, screen.getMinecraft().font);
+            screen.renderComponentTooltip(stack, getTooltipData(screen, lines, maxWidth), mouseX, mouseY, screen.getMinecraft().font);
 			return true;
         }
 		return false;
     }
 
 	@SuppressWarnings("resource")
-    public static boolean renderTooltip(Screen screen, GuiAreaDefinition area, List<Component> lines, PoseStack stack, int mouseX, int mouseY) {
+    public static <T extends FormattedText> boolean renderTooltip(Screen screen, GuiAreaDefinition area, List<T> lines, int maxWidth, PoseStack stack, int mouseX, int mouseY) {
         if (area.isInBounds(mouseX, mouseY)) {
-            screen.renderComponentTooltip(stack, lines, mouseX, mouseY, screen.getMinecraft().font);
+            screen.renderComponentTooltip(stack, getTooltipData(screen, lines, maxWidth), mouseX, mouseY, screen.getMinecraft().font);
 			return true;
         }
 		return false;
     }
 
     @SuppressWarnings("resource")
-    public static <W extends AbstractWidget> boolean renderTooltip(Screen screen, W widget, List<Component> lines, int maxWidth, PoseStack stack, int mouseX, int mouseY) {
-        if (widget.isMouseOver(mouseX, mouseY)) {
-            screen.renderTooltip(stack, getTooltipData(screen, lines, maxWidth), mouseX, mouseY, screen.getMinecraft().font);
-			return true;
-        }
-		return false;
-    }
-
-	@SuppressWarnings("resource")
-    public static boolean renderTooltip(Screen screen, GuiAreaDefinition area, List<Component> lines, int maxWidth, PoseStack stack, int mouseX, int mouseY) {
-        if (area.isInBounds(mouseX, mouseY)) {
-            screen.renderTooltip(stack, getTooltipData(screen, lines, maxWidth), mouseX, mouseY, screen.getMinecraft().font);
-			return true;
-        }
-		return false;
-    }
-
-    @SuppressWarnings("resource")
-    public static <T extends Enum<T> & ITranslatableEnum> List<FormattedCharSequence> getEnumTooltipData(String modid, Screen screen, Class<T> enumClass, int maxWidth) {
-        List<FormattedCharSequence> c = new ArrayList<>();
+    public static <T extends Enum<T> & ITranslatableEnum> List<FormattedText> getEnumTooltipData(String modid, Screen screen, Class<T> enumClass, int maxWidth) {
+        List<FormattedText> c = new ArrayList<>();
         T enumValue = enumClass.getEnumConstants()[0];
-        c.addAll(screen.getMinecraft().font.split(new TranslatableComponent(enumValue.getEnumDescriptionTranslationKey(modid)), maxWidth).stream().toList());
-        c.add(new TextComponent("").getVisualOrderText());
+        c.addAll(screen.getMinecraft().font.splitter.splitLines(new TranslatableComponent(enumValue.getEnumDescriptionTranslationKey(modid)), maxWidth, Style.EMPTY).stream().toList());
+        c.add(new TextComponent(""));
         c.addAll(Arrays.stream(enumClass.getEnumConstants()).map((tr) -> {
             return new TextComponent(String.format("§l> %s§r§7\n%s", new TranslatableComponent(tr.getValueTranslationKey(modid)).getString(), new TranslatableComponent(tr.getValueInfoTranslationKey(modid)).getString()));
-        }).map((x) -> screen.getMinecraft().font.split(x, maxWidth).stream().toList()).flatMap(List::stream).collect(Collectors.toList()));
+        }).map((x) -> screen.getMinecraft().font.splitter.splitLines(x, maxWidth, Style.EMPTY).stream().toList()).flatMap(List::stream).collect(Collectors.toList()));
         
         return c;
     }
 
-    public static <T extends Enum<T> & ITranslatableEnum> List<Component> getEnumTooltipData(String modid, Class<T> enumClass) {
-        List<Component> c = new ArrayList<>();
+    public static <T extends Enum<T> & ITranslatableEnum> List<FormattedText> getEnumTooltipData(String modid, Class<T> enumClass) {
+        List<FormattedText> c = new ArrayList<>();
         T enumValue = enumClass.getEnumConstants()[0];
         c.add(new TranslatableComponent(enumValue.getEnumDescriptionTranslationKey(modid)));
         c.add(new TextComponent(""));
@@ -164,12 +146,12 @@ public final class GuiUtils {
         return c;
     }
 
-    public static List<FormattedCharSequence> getTooltipData(Screen screen, Component component, int maxWidth) {
+    public static <T extends FormattedText> List<FormattedText> getTooltipData(Screen screen, T component, int maxWidth) {
         return getTooltipData(screen, List.of(component), maxWidth);
     }
 
-    public static List<FormattedCharSequence> getTooltipData(Screen screen, Collection<Component> components, int maxWidth) {
-        return components.stream().flatMap(a -> screen.getMinecraft().font.split(a, maxWidth <= 0 ? screen.width : maxWidth).stream()).toList();
+    public static <T extends FormattedText> List<FormattedText> getTooltipData(Screen screen, Collection<T> components, int maxWidth) {
+        return components.stream().flatMap(a -> screen.getMinecraft().font.splitter.splitLines(a, maxWidth <= 0 ? screen.width : maxWidth, Style.EMPTY).stream()).toList();
     }
 
 

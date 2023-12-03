@@ -8,24 +8,24 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import de.mrjulsen.mcdragonlib.common.ITranslatableEnum;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.TextComponent;
 
 public class Tooltip {
     public static final int WIDTH_UNDEFINED = -1;
 
-    private final List<Component> lines;
+    private final List<FormattedText> lines;
     private int maxWidth = WIDTH_UNDEFINED;
     private GuiAreaDefinition assignedArea;
     private AbstractWidget assignedWidget;
     private boolean visible = true;
 
-    private Tooltip(List<Component> lines) {
+    private Tooltip(List<FormattedText> lines) {
         this.lines = lines;
     }
 
     public static Tooltip empty() {
-        return Tooltip.of((Component)null);
+        return Tooltip.of((FormattedText)null);
     }
 
     public static Tooltip of(String text) {
@@ -33,15 +33,15 @@ public class Tooltip {
     }
 
     public static Tooltip of(Collection<String> text) {
-        return new Tooltip(text.stream().map(x -> (Component)new TextComponent(x)).toList());
+        return new Tooltip(text.stream().map(x -> (FormattedText)new TextComponent(x)).toList());
     }
 
-    public static Tooltip of(Component component) {
-        return new Tooltip(component == null ? null : List.of(component));
+    public static Tooltip of(FormattedText FormattedText) {
+        return new Tooltip(FormattedText == null ? null : List.of(FormattedText));
     }
 
-    public static Tooltip of(List<Component> components) {
-        return new Tooltip(components);
+    public static Tooltip of(List<FormattedText> FormattedTexts) {
+        return new Tooltip(FormattedTexts);
     }
 
     public static <E extends Enum<E> & ITranslatableEnum> Tooltip of(String modid, Class<E> enumClass) {
@@ -69,7 +69,7 @@ public class Tooltip {
 
 
 
-    public List<Component> getLines() {
+    public List<FormattedText> getLines() {
         return lines;
     }
 
