@@ -8,11 +8,12 @@ import com.mojang.brigadier.suggestion.Suggestion;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.CommandSuggestions;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.Mth;
 
-public class CustomStringSuggestions extends CustomCommandSuggestions {
+public class CustomStringSuggestions extends CommandSuggestions {
 
 	private List<String> viableStations;
 	private String previous = "<>";
@@ -69,7 +70,7 @@ public class CustomStringSuggestions extends CustomCommandSuggestions {
 		for (Suggestion suggestion : currentSuggestions)
 			width = Math.max(width, this.font.width(suggestion.getText()));
 		int x = Mth.clamp(input.getScreenX(0), 0, input.getScreenX(0) + input.getInnerWidth() - width);
-		suggestions = new CustomCommandSuggestions.SuggestionsList(x, yOffset, width, currentSuggestions, false);
+		suggestions = new CommandSuggestions.SuggestionsList(x, yOffset, width, currentSuggestions, false);
 	}
 
 	public EditBox getEditBox() {

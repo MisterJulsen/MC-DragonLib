@@ -50,7 +50,7 @@ description='''A simple library mod which contains useful code for all of my mod
 [[dependencies.dragonlib]]
     modId="minecraft"
     mandatory=true
-# This version range declares a minimum of the current minecraft version up to but not including the next major version
+    # This version range declares a minimum of the current minecraft version up to but not including the next major version
     versionRange="[1.18.2,1.19)"
     ordering="NONE"
     side="BOTH"
