@@ -24,6 +24,11 @@ public abstract class CommonScreen extends net.minecraft.client.gui.screens.Scre
 
     protected List<Tooltip> tooltips = new ArrayList<>();
 
+    public final Consumer<Button> NO_BUTTON_CLICK_ACTION = (a) -> {};
+    public final BiConsumer<CycleButton<?>, ?> NO_CYCLE_BUTTON_VALUE_CHANGE_ACTION = (a, b) -> {};
+    public final BiConsumer<EditBox, Boolean> NO_EDIT_BOX_FOCUS_CHANGE_ACTION = (a, b) -> {};
+    public final BiConsumer<ForgeSlider, Double> NO_SLIDER_CHANGE_VALUE_ACTION = (a, b) -> {};
+
     protected CommonScreen(Component title) {
         super(title);
     }
@@ -87,7 +92,7 @@ public abstract class CommonScreen extends net.minecraft.client.gui.screens.Scre
     }
 
     protected <W extends AbstractWidget> W addRenderableWidget(W widget, int x, int y, int width, int height, Tooltip tooltip) {
-        if (tooltip != null && tooltip.equals(Tooltip.empty())) {
+        if (tooltip != null && !tooltip.equals(Tooltip.empty())) {
             addTooltip(tooltip.assignedTo(widget));
         }
 
