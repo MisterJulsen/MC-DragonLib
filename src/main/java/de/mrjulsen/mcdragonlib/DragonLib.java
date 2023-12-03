@@ -33,9 +33,7 @@ public final class DragonLib {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        LOGGER.info("#####################################################");
-        LOGGER.info("#       🐉 Init Mod DRAGON LIB by MRJULSEN 🐉       #");
-        LOGGER.info("#####################################################");
+        LOGGER.info(" -=- 🐉 Init Mod DRAGON LIB by MRJULSEN 🐉 -=- ");
 
         PROXY.setup(event);
     }
