@@ -8,7 +8,6 @@ import org.apache.commons.lang3.function.TriFunction;
 import java.util.Collection;
 import java.util.HashMap;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
 public final class ScheduledTask<T> {
@@ -19,19 +18,19 @@ public final class ScheduledTask<T> {
     private final TriFunction<T, Level, Integer, Boolean> action;
     private final int tickDelay;
     private final int maxIterations;
-    private final ResourceLocation dimensionLocation;
+    private final Level level;
 
     // internal
     private int iteration = 0;
     private long currentTick = -1;
     private UUID id;
     
-    private ScheduledTask(T data, ResourceLocation dimensionLocation, int delay, int maxIterations, TriFunction<T, Level, Integer, Boolean> action) {
+    private ScheduledTask(T data, Level level, int delay, int maxIterations, TriFunction<T, Level, Integer, Boolean> action) {
         this.data = data;
         this.tickDelay = delay;
         this.maxIterations = maxIterations;
         this.action = action;
-        this.dimensionLocation = dimensionLocation;
+        this.level = level;
     }
 
     /**
@@ -44,7 +43,7 @@ public final class ScheduledTask<T> {
      * @return New {@code SchedulesTask} object.
      */
     public static <T> ScheduledTask<T> create(T data, Level level, int delay, int maxIterations, TriFunction<T, Level, Integer, Boolean> action) {
-        ScheduledTask<T> task = new ScheduledTask<T>(data, level.dimension().location(), delay, maxIterations, action);
+        ScheduledTask<T> task = new ScheduledTask<T>(data, level, delay, maxIterations, action);
         task.id = ScheduledTaskHolder.store(task);
         return task;
     }
@@ -58,12 +57,12 @@ public final class ScheduledTask<T> {
      * @return New {@code ScheduledTask} object.
      */
     public static <T> ScheduledTask<T> create(T data, Level level, int delay, TriFunction<T, Level, Integer, Boolean> action) {
-        ScheduledTask<T> task = new ScheduledTask<T>(data, level.dimension().location(), delay, INFINITE_RUNTIME, action);
+        ScheduledTask<T> task = new ScheduledTask<T>(data, level, delay, INFINITE_RUNTIME, action);
         task.id = ScheduledTaskHolder.store(task);
         return task;
     }
 
-    private void run(Level level) {
+    private void run() {
         currentTick++;
         if (currentTick % tickDelay != 0) {
             return;
@@ -92,9 +91,9 @@ public final class ScheduledTask<T> {
         return ScheduledTaskHolder.scheduledTasks.size();
     }
 
-    public static void runScheduledTasks(Level level) {
-        final Collection<ScheduledTask<?>> taskList = ScheduledTaskHolder.scheduledTasks.values().stream().filter(x -> x.dimensionLocation.equals(level.dimension().location())).toList();
-        taskList.forEach(x -> x.run(level));
+    public static void runScheduledTasks() {
+        final Collection<ScheduledTask<?>> taskList = ScheduledTaskHolder.scheduledTasks.values();
+        taskList.forEach(x -> x.run());
     }
 
     public static void cancelAllTasks() {
