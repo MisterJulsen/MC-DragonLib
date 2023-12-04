@@ -111,7 +111,6 @@ public final class ScheduledTask<T> {
             while (scheduledTasks.containsKey(id)) {
                 id = UUID.randomUUID();
             }
-            System.out.println("ADDED");
             scheduledTasks.put(id, task);
             return id;
         }
