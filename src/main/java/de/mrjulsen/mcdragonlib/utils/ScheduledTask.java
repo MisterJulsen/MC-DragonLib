@@ -8,8 +8,8 @@ import org.apache.commons.lang3.function.TriFunction;
 import java.util.Collection;
 import java.util.HashMap;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.TickEvent;
 
 public final class ScheduledTask<T> {
 
@@ -19,19 +19,19 @@ public final class ScheduledTask<T> {
     private final TriFunction<T, Level, Integer, Boolean> action;
     private final int tickDelay;
     private final int maxIterations;
-    private final TickEvent.Type side;
+    private final ResourceLocation dimensionLocation;
 
     // internal
     private int iteration = 0;
     private long currentTick = -1;
     private UUID id;
     
-    private ScheduledTask(T data, TickEvent.Type side, int delay, int maxIterations, TriFunction<T, Level, Integer, Boolean> action) {
+    private ScheduledTask(T data, ResourceLocation dimensionLocation, int delay, int maxIterations, TriFunction<T, Level, Integer, Boolean> action) {
         this.data = data;
         this.tickDelay = delay;
         this.maxIterations = maxIterations;
         this.action = action;
-        this.side = side;
+        this.dimensionLocation = dimensionLocation;
     }
 
     /**
@@ -43,8 +43,8 @@ public final class ScheduledTask<T> {
      * @param action The action to run. Return {@code false} to cancel the task.
      * @return New {@code SchedulesTask} object.
      */
-    public static <T> ScheduledTask<T> create(T data, TickEvent.Type side, int delay, int maxIterations, TriFunction<T, Level, Integer, Boolean> action) {
-        ScheduledTask<T> task = new ScheduledTask<T>(data, side, delay, maxIterations, action);
+    public static <T> ScheduledTask<T> create(T data, Level level, int delay, int maxIterations, TriFunction<T, Level, Integer, Boolean> action) {
+        ScheduledTask<T> task = new ScheduledTask<T>(data, level.dimension().location(), delay, maxIterations, action);
         task.id = ScheduledTaskHolder.store(task);
         return task;
     }
@@ -57,8 +57,8 @@ public final class ScheduledTask<T> {
      * @param action The action to run. Return {@code false} to cancel the task.
      * @return New {@code ScheduledTask} object.
      */
-    public static <T> ScheduledTask<T> create(T data, TickEvent.Type side, int delay, TriFunction<T, Level, Integer, Boolean> action) {
-        ScheduledTask<T> task = new ScheduledTask<T>(data, side, delay, INFINITE_RUNTIME, action);
+    public static <T> ScheduledTask<T> create(T data, Level level, int delay, TriFunction<T, Level, Integer, Boolean> action) {
+        ScheduledTask<T> task = new ScheduledTask<T>(data, level.dimension().location(), delay, INFINITE_RUNTIME, action);
         task.id = ScheduledTaskHolder.store(task);
         return task;
     }
@@ -92,8 +92,8 @@ public final class ScheduledTask<T> {
         return ScheduledTaskHolder.scheduledTasks.size();
     }
 
-    public static void runScheduledTasks(Level level, TickEvent.Type side) {
-        final Collection<ScheduledTask<?>> taskList = ScheduledTaskHolder.scheduledTasks.values().stream().filter(x -> x.side == side).toList();
+    public static void runScheduledTasks(Level level) {
+        final Collection<ScheduledTask<?>> taskList = ScheduledTaskHolder.scheduledTasks.values().stream().filter(x -> x.dimensionLocation.equals(level.dimension().location())).toList();
         taskList.forEach(x -> x.run(level));
     }
 
@@ -111,7 +111,7 @@ public final class ScheduledTask<T> {
             while (scheduledTasks.containsKey(id)) {
                 id = UUID.randomUUID();
             }
-
+            System.out.println("ADDED");
             scheduledTasks.put(id, task);
             return id;
         }
