@@ -7,6 +7,7 @@ import org.apache.commons.lang3.function.TriFunction;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 import net.minecraft.world.level.Level;
 
@@ -92,7 +93,7 @@ public final class ScheduledTask<T> {
     }
 
     public static void runScheduledTasks() {
-        final Collection<ScheduledTask<?>> taskList = ScheduledTaskHolder.scheduledTasks.values();
+        final Collection<ScheduledTask<?>> taskList = new ArrayList<>(ScheduledTaskHolder.scheduledTasks.values());
         taskList.forEach(x -> x.run());
     }
 
