@@ -250,6 +250,18 @@ public final class GuiUtils {
         
 		return slider;
     }
+
+    public static TranslatableComponent translate(String key, Object... args) {
+        return new TranslatableComponent(key, args);
+    }
+
+    public static TranslatableComponent translate(String key) {
+        return new TranslatableComponent(key);
+    }
+
+    public static TextComponent text(String key) {
+        return new TextComponent(key);
+    }
 	
 }
 
