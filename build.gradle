@@ -18,7 +18,7 @@ plugins {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.parchmentmc.librarian.forgegradle'
 
-version = '0.1.3c-1.18.2'
+version = '0.1.4-1.18.2'
 group = 'de.mrjulsen.mcdragonlib' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'dragonlib'
 
