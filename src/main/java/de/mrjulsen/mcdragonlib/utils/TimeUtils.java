@@ -1,12 +1,13 @@
 package de.mrjulsen.mcdragonlib.utils;
 
 import de.mrjulsen.mcdragonlib.DragonLibConstants;
-import net.minecraft.network.chat.TranslatableComponent;
+import de.mrjulsen.mcdragonlib.client.gui.GuiUtils;
+import de.mrjulsen.mcdragonlib.common.ITranslatableEnum;
 import net.minecraft.util.StringRepresentable;
 
 public final class TimeUtils {
 
-    public static int shiftTimeToMinecraftTicks(int time) {
+    public static int shiftDayTimeToMinecraftTicks(int time) {
         time = (time - 6000) % DragonLibConstants.TICKS_PER_DAY;
         if (time < 0) {
             time += DragonLibConstants.TICKS_PER_DAY;
@@ -16,7 +17,7 @@ public final class TimeUtils {
 
     public static String parseTime(int time, TimeFormat format) {
         if (format == TimeFormat.TICKS) {
-            return TimeUtils.shiftTimeToMinecraftTicks(time) + "t";
+            return TimeUtils.shiftDayTimeToMinecraftTicks(time) + "t";
         }
 
         time = time % DragonLibConstants.TICKS_PER_DAY;
@@ -52,11 +53,11 @@ public final class TimeUtils {
         int minutes = time % 1000;
         minutes = (int)(minutes / (1000.0D / 60.0D));
         if (hours <= 0 && days <= 0) { 
-            return new TranslatableComponent(DragonLibConstants.DRAGONLIB_MODID + ".time_format.m", minutes).getString();
+            return GuiUtils.translate(DragonLibConstants.DRAGONLIB_MODID + ".time_format.m", minutes).getString();
         } else if (days <= 0) { 
-            return new TranslatableComponent(DragonLibConstants.DRAGONLIB_MODID + ".time_format.hm", hours, minutes).getString();
+            return GuiUtils.translate(DragonLibConstants.DRAGONLIB_MODID + ".time_format.hm", hours, minutes).getString();
         } else { 
-            return new TranslatableComponent(DragonLibConstants.DRAGONLIB_MODID + ".time_format.dhm", days, hours, minutes).getString();
+            return GuiUtils.translate(DragonLibConstants.DRAGONLIB_MODID + ".time_format.dhm", days, hours, minutes).getString();
         }
     }
 
@@ -90,7 +91,7 @@ public final class TimeUtils {
         }
     }
 
-    public static enum TimeFormat implements StringRepresentable {
+    public static enum TimeFormat implements StringRepresentable, ITranslatableEnum {
         TICKS(0, "ticks"),
         HOURS_24(1, "hours_24"),
         HOURS_12(2, "hours_12");
@@ -127,6 +128,16 @@ public final class TimeUtils {
         @Override
         public String getSerializedName() {
             return this.format;
+        }
+
+        @Override
+        public String getEnumName() {
+            return "time_format";
+        }
+
+        @Override
+        public String getEnumValueName() {
+            return getFormat();
         }
     }    
 }

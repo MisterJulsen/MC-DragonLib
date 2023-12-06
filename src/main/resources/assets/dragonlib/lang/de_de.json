@@ -5,6 +5,13 @@
     "dragonlib.time_format.ticks": "Ticks",
     "dragonlib.time_format.hours_24": "24-Stunden-Format",
     "dragonlib.time_format.hours_12": "12-Stunden-Format",
+    "enum.dragonlib.time_format.description": "Gibt an, in welchem Zeitformat die Zeit dargestellt werden soll.",   
+    "enum.dragonlib.time_format.ticks": "Ticks",   
+    "enum.dragonlib.time_format.info.ticks": "Die Zeit in Minecraft Spiel-Ticks zwischen 0 und 24000.",
+    "enum.dragonlib.time_format.hours_12": "12-Stunden-Format", 
+    "enum.dragonlib.time_format.info.hours_12": "Die Zeit im 12-Stunden-Format.",
+    "enum.dragonlib.time_format.hours_24": "24-Stunden-Format",
+    "enum.dragonlib.time_format.info.hours_24": "Die Zeit im 24-Stunden-Format.",
 
     "text.dragonlib.dragon": "Drache",
     "text.dragonlib.next": "Weiter",
