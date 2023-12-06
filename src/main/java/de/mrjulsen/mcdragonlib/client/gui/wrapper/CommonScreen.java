@@ -10,6 +10,7 @@ import de.mrjulsen.mcdragonlib.client.gui.GuiUtils;
 import de.mrjulsen.mcdragonlib.client.gui.Tooltip;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.IExtendedAreaWidget;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ItemButton;
+import de.mrjulsen.mcdragonlib.client.gui.widgets.ModSlider;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ResizableButton;
 import de.mrjulsen.mcdragonlib.common.ITranslatableEnum;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -86,8 +87,8 @@ public abstract class CommonScreen extends net.minecraft.client.gui.screens.Scre
         return this.addRenderableWidget(box, x, y, width, height, tooltip);
     }
 
-    protected ForgeSlider addSlider(int x, int y, int width, int height, Component prefix, Component suffix, double min, double max, double step, double initialValue, boolean drawLabel, BiConsumer<ForgeSlider, Double> onValueChanged, Tooltip tooltip) {
-        ForgeSlider slider = GuiUtils.createSlider(x, y, width, height, prefix, suffix, min, max, step, initialValue, drawLabel, onValueChanged);        
+    protected ModSlider addSlider(int x, int y, int width, int height, Component prefix, Component suffix, double min, double max, double step, double initialValue, boolean drawLabel, BiConsumer<ModSlider, Double> onValueChanged, Consumer<ModSlider> onUpdateMessage, Tooltip tooltip) {
+        ModSlider slider = GuiUtils.createSlider(x, y, width, height, prefix, suffix, min, max, step, initialValue, drawLabel, onValueChanged, onUpdateMessage);        
         return this.addRenderableWidget(slider, x, y, width, height, tooltip);
     }
 

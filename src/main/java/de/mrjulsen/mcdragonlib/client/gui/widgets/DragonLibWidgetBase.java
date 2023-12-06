@@ -2,6 +2,7 @@ package de.mrjulsen.mcdragonlib.client.gui.widgets;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import de.mrjulsen.mcdragonlib.client.gui.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Widget;
@@ -13,7 +14,6 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -55,7 +55,7 @@ public abstract class DragonLibWidgetBase extends GuiComponent implements Widget
     }
 
     public static MutableComponent wrapDefaultNarrationMessage(Component pMessage) {
-        return new TranslatableComponent("gui.narrate.button", pMessage);
+        return GuiUtils.translate("gui.narrate.button", pMessage);
     }
 
     public abstract void renderWidget(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick);
@@ -204,9 +204,9 @@ public abstract class DragonLibWidgetBase extends GuiComponent implements Widget
         p_168803_.add(NarratedElementType.TITLE, this.createNarrationMessage());
         if (this.active) {
             if (this.isFocused()) {
-                p_168803_.add(NarratedElementType.USAGE, new TranslatableComponent("narration.button.usage.focused"));
+                p_168803_.add(NarratedElementType.USAGE, GuiUtils.translate("narration.button.usage.focused"));
             } else {
-                p_168803_.add(NarratedElementType.USAGE, new TranslatableComponent("narration.button.usage.hovered"));
+                p_168803_.add(NarratedElementType.USAGE, GuiUtils.translate("narration.button.usage.hovered"));
             }
         }
 

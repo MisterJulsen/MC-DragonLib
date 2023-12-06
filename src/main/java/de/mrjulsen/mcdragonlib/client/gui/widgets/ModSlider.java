@@ -1,6 +1,6 @@
 package de.mrjulsen.mcdragonlib.client.gui.widgets;
 
-import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue.Consumer;
+import java.util.function.Consumer;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
@@ -30,6 +30,14 @@ public class ModSlider extends ForgeSlider {
         }
         
         onUpdateMessage.accept(this);
+    }
+
+    public void setPrefix(Component text) {
+        this.prefix = text;
+    }
+
+    public void setSuffix(Component text) {
+        this.suffix = text;
     }
     
 }

@@ -58,13 +58,30 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
     public void renderImage(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         Font font = Minecraft.getInstance().font;
         int labelWidth = 0;
-        if (this.getMessage() != null) {
-            labelWidth = font.width(this.getMessage()) + 4;
-            font.draw(pPoseStack, getMessage(), x + width / 2 + 8 - labelWidth / 2 + 4, y + height / 2 - font.lineHeight / 2, getFontColor());
+        switch (getAlignment()) {            
+            case LEFT:
+                if (this.getMessage() != null) {
+                    font.draw(pPoseStack, getMessage(), x + 2 + 16, y + height / 2 - font.lineHeight / 2, getFontColor());
+                }
+                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, x + 2, y + height / 2 - 8);
+                break;
+            case RIGHT:
+                if (this.getMessage() != null) {
+                    labelWidth = font.width(this.getMessage()) + 4;
+                    font.draw(pPoseStack, getMessage(), x + width - 2 - labelWidth + 4, y + height / 2 - font.lineHeight / 2, getFontColor());
+                }
+                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, x + width - 2 - labelWidth - 16, y + height / 2 - 8);
+                break;
+            case CENTER:
+            default:
+                if (this.getMessage() != null) {
+                    labelWidth = font.width(this.getMessage()) + 4;
+                    font.draw(pPoseStack, getMessage(), x + width / 2 + 8 - labelWidth / 2 + 4, y + height / 2 - font.lineHeight / 2, getFontColor());
+                }
+                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, x + width / 2 - 8 - labelWidth / 2, y + height / 2 - 8);
+                break;
         }
         
-        this.renderBg(pPoseStack, Minecraft.getInstance(), pMouseX, pMouseY);
-        Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, x + width / 2 - 8 - labelWidth / 2, y + height / 2 - 8);
     }
 
     public void renderTooltip(Screen parent, PoseStack pPoseStack, int pMouseX, int pMouseY) {

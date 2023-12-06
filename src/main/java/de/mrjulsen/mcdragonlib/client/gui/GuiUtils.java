@@ -21,6 +21,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import de.mrjulsen.mcdragonlib.client.CustomRenderTarget;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ModEditBox;
+import de.mrjulsen.mcdragonlib.client.gui.widgets.ModSlider;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ResizableButton;
 import de.mrjulsen.mcdragonlib.common.ITranslatableEnum;
 import net.minecraft.client.Minecraft;
@@ -37,7 +38,6 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.gui.widget.ForgeSlider;
 
 public final class GuiUtils {
 
@@ -125,10 +125,10 @@ public final class GuiUtils {
     public static <T extends Enum<T> & ITranslatableEnum> List<FormattedText> getEnumTooltipData(String modid, Screen screen, Class<T> enumClass, int maxWidth) {
         List<FormattedText> c = new ArrayList<>();
         T enumValue = enumClass.getEnumConstants()[0];
-        c.addAll(screen.getMinecraft().font.splitter.splitLines(new TranslatableComponent(enumValue.getEnumDescriptionTranslationKey(modid)), maxWidth, Style.EMPTY).stream().toList());
-        c.add(new TextComponent(""));
+        c.addAll(screen.getMinecraft().font.splitter.splitLines(translate(enumValue.getEnumDescriptionTranslationKey(modid)), maxWidth, Style.EMPTY).stream().toList());
+        c.add(text(""));
         c.addAll(Arrays.stream(enumClass.getEnumConstants()).map((tr) -> {
-            return new TextComponent(String.format("§l> %s§r§7\n%s", new TranslatableComponent(tr.getValueTranslationKey(modid)).getString(), new TranslatableComponent(tr.getValueInfoTranslationKey(modid)).getString()));
+            return text(String.format("§l> %s§r§7\n%s", translate(tr.getValueTranslationKey(modid)).getString(), translate(tr.getValueInfoTranslationKey(modid)).getString()));
         }).map((x) -> screen.getMinecraft().font.splitter.splitLines(x, maxWidth, Style.EMPTY).stream().toList()).flatMap(List::stream).collect(Collectors.toList()));
         
         return c;
@@ -137,10 +137,10 @@ public final class GuiUtils {
     public static <T extends Enum<T> & ITranslatableEnum> List<FormattedText> getEnumTooltipData(String modid, Class<T> enumClass) {
         List<FormattedText> c = new ArrayList<>();
         T enumValue = enumClass.getEnumConstants()[0];
-        c.add(new TranslatableComponent(enumValue.getEnumDescriptionTranslationKey(modid)));
-        c.add(new TextComponent(""));
+        c.add(translate(enumValue.getEnumDescriptionTranslationKey(modid)));
+        c.add(text(""));
         c.addAll(Arrays.stream(enumClass.getEnumConstants()).map((tr) -> {
-            return new TextComponent(String.format("§l> %s§r§7\n%s", new TranslatableComponent(tr.getValueTranslationKey(modid)).getString(), new TranslatableComponent(tr.getValueInfoTranslationKey(modid)).getString()));
+            return text(String.format("§l> %s§r§7\n%s", translate(tr.getValueTranslationKey(modid)).getString(), translate(tr.getValueInfoTranslationKey(modid)).getString()));
         }).toList());
         return c;
     }
@@ -230,7 +230,7 @@ public final class GuiUtils {
 
 	public static <T extends Enum<T> & ITranslatableEnum> CycleButton<T> createCycleButton(String modid, Class<T> clazz, int x, int y, int width, int height, Component text, T initialValue, BiConsumer<CycleButton<?>, T> onValueChanged) {
         CycleButton<T> btn = CycleButton.<T>builder((p) -> {            
-            return new TranslatableComponent(clazz.cast(p).getValueTranslationKey(modid));
+            return translate(clazz.cast(p).getValueTranslationKey(modid));
         })
             .withValues(clazz.getEnumConstants()).withInitialValue(initialValue)
             .create(x, y, width, height, text, (b, v) -> onValueChanged.accept(b, v))
@@ -247,7 +247,7 @@ public final class GuiUtils {
 	}
 
     public static EditBox createEditBox(int x, int h, int width, int height, Font font, String text, boolean drawBg, Consumer<String> onValueChanged, BiConsumer<EditBox, Boolean> onFocusChanged) {
-        ModEditBox box = new ModEditBox(font, x, h, width, height, new TextComponent(text));
+        ModEditBox box = new ModEditBox(font, x, h, width, height, text(text));
         box.setOnFocusChanged(onFocusChanged);
 		box.setResponder(onValueChanged);
         box.setValue(text);
@@ -256,15 +256,20 @@ public final class GuiUtils {
 		return box;
     }
 
-    public static ForgeSlider createSlider(int x, int y, int width, int height, Component prefix, Component suffix, double min, double max, double step, double initialValue, boolean drawLabel, BiConsumer<ForgeSlider, Double> onValueChanged) {
-        ForgeSlider slider = new ForgeSlider(x, y, width, height, prefix, suffix, min, max, initialValue, step, 1, drawLabel) {
+    public static ModSlider createSlider(int x, int y, int width, int height, Component prefix, Component suffix, double min, double max, double step, double initialValue, boolean drawLabel, BiConsumer<ModSlider, Double> onValueChanged, Consumer<ModSlider> onUpdateMessage) {
+        
+        ModSlider slider = new ModSlider(x, y, width, height, prefix, suffix, min, max, initialValue, step, 1, drawLabel, null) {
             @Override
             protected void updateMessage() {
-                if (this.drawString) {
-                    this.setMessage(new TextComponent("").append(prefix).append(": ").append(this.getValueString()).append(suffix));
-                } else {
-                    this.setMessage(TextComponent.EMPTY);
-                }        
+                if (onUpdateMessage == null) {
+                    if (this.drawString) {
+                        this.setMessage(text("").append(prefix).append(": ").append(this.getValueString()).append(suffix));
+                    } else {
+                        this.setMessage(TextComponent.EMPTY);
+                    } 
+                    return;
+                }                
+                onUpdateMessage.accept(this);                       
             }
 
             @Override

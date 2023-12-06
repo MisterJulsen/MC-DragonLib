@@ -9,7 +9,6 @@ import de.mrjulsen.mcdragonlib.common.ITranslatableEnum;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.TextComponent;
 
 public class Tooltip {
     public static final int WIDTH_UNDEFINED = -1;
@@ -29,11 +28,11 @@ public class Tooltip {
     }
 
     public static Tooltip of(String text) {
-        return new Tooltip(text == null ? null : List.of(new TextComponent(text)));
+        return new Tooltip(text == null ? null : List.of(GuiUtils.text(text)));
     }
 
     public static Tooltip of(Collection<String> text) {
-        return new Tooltip(text.stream().map(x -> (FormattedText)new TextComponent(x)).toList());
+        return new Tooltip(text.stream().map(x -> (FormattedText)GuiUtils.text(x)).toList());
     }
 
     public static Tooltip of(FormattedText FormattedText) {

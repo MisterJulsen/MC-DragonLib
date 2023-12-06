@@ -1,7 +1,14 @@
 package de.mrjulsen.mcdragonlib.common;
 
 public interface ITranslatableEnum {
+    /**
+     * Name of the enum class.
+     */
     String getEnumName();
+
+    /**
+     * Name of each enum value.
+     */
     String getEnumValueName();
 
     default String getValueTranslationKey(String modid) {

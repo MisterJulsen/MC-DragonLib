@@ -18,13 +18,9 @@ public class Location {
     private BlockPos blockPos;
 
     private Location() {}
-
+    
     public Location(int x, int y, int z, String dimension) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.dimension = dimension;
-        this.generateBlockPos();
+        this((double)x, (double)y, (double)z, dimension);
     }
 
     public Location(double x, double y, double z, String dimension) {
@@ -42,6 +38,11 @@ public class Location {
         this.dimension = level.dimension().location().toString();
         this.blockPos = pos;
     }
+
+    public Location(Vec3 vec, Level level) {
+        this(vec.x, vec.y, vec.z, level.dimension().location().toString());
+    }
+    
 
     public BlockPos getLocationBlockPos() {
         return blockPos;

@@ -22,7 +22,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
@@ -151,10 +150,10 @@ public class ResizableCycleButton<T> extends AbstractButton implements TooltipAc
             Component component = this.createLabelForValue(t);
             if (this.isFocused()) {
                 pNarrationElementOutput.add(NarratedElementType.USAGE,
-                        new TranslatableComponent("narration.cycle_button.usage.focused", component));
+                        GuiUtils.translate("narration.cycle_button.usage.focused", component));
             } else {
                 pNarrationElementOutput.add(NarratedElementType.USAGE,
-                        new TranslatableComponent("narration.cycle_button.usage.hovered", component));
+                        GuiUtils.translate("narration.cycle_button.usage.hovered", component));
             }
         }
 
