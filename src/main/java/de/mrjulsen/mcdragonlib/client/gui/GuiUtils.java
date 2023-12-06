@@ -158,11 +158,12 @@ public final class GuiUtils {
         if (input.isEmpty())
             return true;
 
-        if (input.startsWith("-"))
-            return true;
+        String i = input;
+        if (input.equals("-"))
+            i = "-0";
 
         try {
-            Integer.parseInt(input);
+            Integer.parseInt(i);
 			return true;
         } catch (NumberFormatException e) {
             return false;
