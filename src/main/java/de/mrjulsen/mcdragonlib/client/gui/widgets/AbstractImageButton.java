@@ -22,7 +22,7 @@ public abstract class AbstractImageButton<T extends AbstractImageButton<T>> exte
     private final WidgetsCollection collection;
     private ButtonType type;
     private AreaStyle style;
-    private Alignment alignment;
+    private Alignment alignment = Alignment.CENTER;
     private int color = DragonLibConstants.DEFAULT_UI_FONT_COLOR;
 
     public AbstractImageButton(ButtonType type, AreaStyle style, int pX, int pY, int w, int h, Component pMessage, Consumer<Button> onClick) {
