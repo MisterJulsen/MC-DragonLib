@@ -44,7 +44,6 @@ public final class GuiUtils {
 	public static final int DEFAULT_BUTTON_HEIGHT = 20;
 	
 	protected static CustomRenderTarget framebuffer;
-	private static ResourceLocation lastTexture;
     
     /**
 	 * @see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/foundation/gui/UIRenderHelper.java
@@ -172,29 +171,56 @@ public final class GuiUtils {
 
 	public static void setTexture(ResourceLocation texture) {
         RenderSystem.setShaderTexture(0, texture);
-		if (lastTexture == null || !lastTexture.equals(texture)) {
-			lastTexture = texture;
-			
-		}
+	}
+
+    public static void setTexture(int textureId) {
+        RenderSystem.setShaderTexture(0, textureId);
 	}
 
 	public static void setShaderColor(float r, float g, float b, float a) {		
         RenderSystem.setShaderColor(r, g, b, a);
 	}
 
-	public static void blit(ResourceLocation texture, PoseStack pPoseStack, int pX, int pY, int pUOffset, int pVOffset, int pUWidth, int pVHeight) {
-		setTexture(texture);
+	private static void internalBlit(PoseStack pPoseStack, int pX, int pY, int pUOffset, int pVOffset, int pUWidth, int pVHeight) {
 		GuiComponent.blit(pPoseStack, pX, pY, (float)pUOffset, (float)pVOffset, pUWidth, pVHeight, 256, 256);
+	}
+
+	private static void internalBlit(PoseStack pPoseStack, int pX, int pY, int pWidth, int pHeight, float pUOffset, float pVOffset, int pUWidth, int pVHeight, int pTextureWidth, int pTextureHeight) {
+		GuiComponent.blit(pPoseStack, pX, pY, pWidth, pHeight, pUOffset, pVOffset, pUWidth, pVHeight, pTextureWidth, pTextureHeight);
+	}
+
+	private static void internalBlit(PoseStack pPoseStack, int pX, int pY, float pUOffset, float pVOffset, int pWidth, int pHeight, int pTextureWidth, int pTextureHeight) {
+		GuiComponent.blit(pPoseStack, pX, pY, pUOffset, pVOffset, pWidth, pHeight, pTextureHeight, pTextureWidth);
+	}
+
+    public static void blit(ResourceLocation texture, PoseStack pPoseStack, int pX, int pY, int pUOffset, int pVOffset, int pUWidth, int pVHeight) {
+		setTexture(texture);
+		internalBlit(pPoseStack, pX, pY, pUOffset, pVOffset, pUWidth, pVHeight);
 	}
 
 	public static void blit(ResourceLocation texture, PoseStack pPoseStack, int pX, int pY, int pWidth, int pHeight, float pUOffset, float pVOffset, int pUWidth, int pVHeight, int pTextureWidth, int pTextureHeight) {
 		setTexture(texture);
-		GuiComponent.blit(pPoseStack, pX, pY, pWidth, pHeight, pUOffset, pVOffset, pUWidth, pVHeight, pTextureWidth, pTextureHeight);
+		internalBlit(pPoseStack, pX, pY, pWidth, pHeight, pUOffset, pVOffset, pUWidth, pVHeight, pTextureWidth, pTextureHeight);
 	}
 
 	public static void blit(ResourceLocation texture, PoseStack pPoseStack, int pX, int pY, float pUOffset, float pVOffset, int pWidth, int pHeight, int pTextureWidth, int pTextureHeight) {
 		setTexture(texture);
-		GuiComponent.blit(pPoseStack, pX, pY, pUOffset, pVOffset, pWidth, pHeight, pTextureHeight, pTextureWidth);
+		internalBlit(pPoseStack, pX, pY, pUOffset, pVOffset, pWidth, pHeight, pTextureHeight, pTextureWidth);
+	}
+
+    public static void blit(int textureId, PoseStack pPoseStack, int pX, int pY, int pUOffset, int pVOffset, int pUWidth, int pVHeight) {
+		setTexture(textureId);
+		internalBlit(pPoseStack, pX, pY, pUOffset, pVOffset, pUWidth, pVHeight);
+	}
+
+	public static void blit(int textureId, PoseStack pPoseStack, int pX, int pY, int pWidth, int pHeight, float pUOffset, float pVOffset, int pUWidth, int pVHeight, int pTextureWidth, int pTextureHeight) {
+		setTexture(textureId);
+		internalBlit(pPoseStack, pX, pY, pWidth, pHeight, pUOffset, pVOffset, pUWidth, pVHeight, pTextureWidth, pTextureHeight);
+	}
+
+	public static void blit(int textureId, PoseStack pPoseStack, int pX, int pY, float pUOffset, float pVOffset, int pWidth, int pHeight, int pTextureWidth, int pTextureHeight) {
+		setTexture(textureId);
+		internalBlit(pPoseStack, pX, pY, pUOffset, pVOffset, pWidth, pHeight, pTextureHeight, pTextureWidth);
 	}
 	
 
@@ -202,7 +228,7 @@ public final class GuiUtils {
 		return new ResizableButton(x, y, width, height, text, (btn) -> onClick.accept(btn));
 	}
 
-	public static <T extends Enum<T> & ITranslatableEnum> CycleButton<T> createCycleButton(String modid, Class<T> clazz, int x, int y, int width, int height, Component text, T initialValue, BiConsumer<CycleButton<?>, T> onValueChanged, Tooltip tooltip) {
+	public static <T extends Enum<T> & ITranslatableEnum> CycleButton<T> createCycleButton(String modid, Class<T> clazz, int x, int y, int width, int height, Component text, T initialValue, BiConsumer<CycleButton<?>, T> onValueChanged) {
         CycleButton<T> btn = CycleButton.<T>builder((p) -> {            
             return new TranslatableComponent(clazz.cast(p).getValueTranslationKey(modid));
         })
@@ -212,7 +238,7 @@ public final class GuiUtils {
 		return btn;
 	}
 
-    public static CycleButton<Boolean> createOnOffButton(int x, int y, int width, int height, Component text, boolean initialValue, BiConsumer<CycleButton<?>, Boolean> onValueChanged, Tooltip tooltip) {
+    public static CycleButton<Boolean> createOnOffButton(int x, int y, int width, int height, Component text, boolean initialValue, BiConsumer<CycleButton<?>, Boolean> onValueChanged) {
         CycleButton<Boolean> btn = CycleButton.onOffBuilder(initialValue)
             .create(x, y, width, height, text, (b, v) -> onValueChanged.accept(b, v))
         ;
@@ -220,7 +246,7 @@ public final class GuiUtils {
 		return btn;
 	}
 
-    public static EditBox createEditBox(int x, int h, int width, int height, Font font, String text, boolean drawBg, Consumer<String> onValueChanged, BiConsumer<EditBox, Boolean> onFocusChanged, Tooltip tooltip) {
+    public static EditBox createEditBox(int x, int h, int width, int height, Font font, String text, boolean drawBg, Consumer<String> onValueChanged, BiConsumer<EditBox, Boolean> onFocusChanged) {
         ModEditBox box = new ModEditBox(font, x, h, width, height, new TextComponent(text));
         box.setOnFocusChanged(onFocusChanged);
 		box.setResponder(onValueChanged);
@@ -230,7 +256,7 @@ public final class GuiUtils {
 		return box;
     }
 
-    public static ForgeSlider createSlider(int x, int y, int width, int height, Component prefix, Component suffix, double min, double max, double step, double initialValue, boolean drawLabel, BiConsumer<ForgeSlider, Double> onValueChanged, Tooltip tooltip) {
+    public static ForgeSlider createSlider(int x, int y, int width, int height, Component prefix, Component suffix, double min, double max, double step, double initialValue, boolean drawLabel, BiConsumer<ForgeSlider, Double> onValueChanged) {
         ForgeSlider slider = new ForgeSlider(x, y, width, height, prefix, suffix, min, max, initialValue, step, 1, drawLabel) {
             @Override
             protected void updateMessage() {

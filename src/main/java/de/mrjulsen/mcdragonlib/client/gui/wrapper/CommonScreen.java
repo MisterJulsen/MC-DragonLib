@@ -45,7 +45,7 @@ public abstract class CommonScreen extends net.minecraft.client.gui.screens.Scre
         this.renderables.stream().filter(x -> x instanceof EditBox).forEach(x -> ((EditBox)x).tick());
     }
 
-    public void onDone() {}
+    protected void onDone() {}
 
     public void renderBg(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {}
 
@@ -72,22 +72,22 @@ public abstract class CommonScreen extends net.minecraft.client.gui.screens.Scre
 	}
 
     protected <T extends Enum<T> & ITranslatableEnum> CycleButton<T> addCycleButton(String modid, Class<T> clazz, int x, int y, int width, int height, Component text, T initialValue, BiConsumer<CycleButton<?>, T> onValueChanged, Tooltip tooltip) {
-        CycleButton<T> btn = GuiUtils.createCycleButton(modid, clazz, x, y, width, height, text, initialValue, onValueChanged, tooltip);
+        CycleButton<T> btn = GuiUtils.createCycleButton(modid, clazz, x, y, width, height, text, initialValue, onValueChanged);
         return addRenderableWidget(btn, x, y, width, height, tooltip);
 	}
 
     protected CycleButton<Boolean> addOnOffButton(int x, int y, int width, int height, Component text, boolean initialValue, BiConsumer<CycleButton<?>, Boolean> onValueChanged, Tooltip tooltip) {
-        CycleButton<Boolean> btn = GuiUtils.createOnOffButton(x, y, width, height, text, initialValue, onValueChanged, tooltip);
+        CycleButton<Boolean> btn = GuiUtils.createOnOffButton(x, y, width, height, text, initialValue, onValueChanged);
         return addRenderableWidget(btn, x, y, width, height, tooltip);
 	}
 
     protected EditBox addEditBox(int x, int y, int width, int height, String text, boolean drawBg, Consumer<String> onValueChanged, BiConsumer<EditBox, Boolean> onFocusChanged, Tooltip tooltip) {
-        EditBox box = GuiUtils.createEditBox(x, y, width, height, font, text, drawBg, onValueChanged, onFocusChanged, tooltip);
+        EditBox box = GuiUtils.createEditBox(x, y, width, height, font, text, drawBg, onValueChanged, onFocusChanged);
         return this.addRenderableWidget(box, x, y, width, height, tooltip);
     }
 
     protected ForgeSlider addSlider(int x, int y, int width, int height, Component prefix, Component suffix, double min, double max, double step, double initialValue, boolean drawLabel, BiConsumer<ForgeSlider, Double> onValueChanged, Tooltip tooltip) {
-        ForgeSlider slider = GuiUtils.createSlider(x, y, width, height, prefix, suffix, min, max, step, initialValue, drawLabel, onValueChanged, tooltip);
+        ForgeSlider slider = GuiUtils.createSlider(x, y, width, height, prefix, suffix, min, max, step, initialValue, drawLabel, onValueChanged);        
         return this.addRenderableWidget(slider, x, y, width, height, tooltip);
     }
 
