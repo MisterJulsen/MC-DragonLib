@@ -23,6 +23,7 @@ import de.mrjulsen.mcdragonlib.client.CustomRenderTarget;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ModEditBox;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ModSlider;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ResizableButton;
+import de.mrjulsen.mcdragonlib.client.gui.widgets.ResizableCycleButton;
 import de.mrjulsen.mcdragonlib.common.ITranslatableEnum;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -229,8 +230,8 @@ public final class GuiUtils {
 		return new ResizableButton(x, y, width, height, text, (btn) -> onClick.accept(btn));
 	}
 
-	public static <T extends Enum<T> & ITranslatableEnum> CycleButton<T> createCycleButton(String modid, Class<T> clazz, int x, int y, int width, int height, Component text, T initialValue, BiConsumer<CycleButton<?>, T> onValueChanged) {
-        CycleButton<T> btn = CycleButton.<T>builder((p) -> {            
+	public static <T extends Enum<T> & ITranslatableEnum> ResizableCycleButton<T> createCycleButton(String modid, Class<T> clazz, int x, int y, int width, int height, Component text, T initialValue, BiConsumer<ResizableCycleButton<?>, T> onValueChanged) {
+        ResizableCycleButton<T> btn = ResizableCycleButton.<T>builder((p) -> {            
             return translate(clazz.cast(p).getValueTranslationKey(modid));
         })
             .withValues(clazz.getEnumConstants()).withInitialValue(initialValue)
@@ -239,8 +240,8 @@ public final class GuiUtils {
 		return btn;
 	}
 
-    public static CycleButton<Boolean> createOnOffButton(int x, int y, int width, int height, Component text, boolean initialValue, BiConsumer<CycleButton<?>, Boolean> onValueChanged) {
-        CycleButton<Boolean> btn = CycleButton.onOffBuilder(initialValue)
+    public static ResizableCycleButton<Boolean> createOnOffButton(int x, int y, int width, int height, Component text, boolean initialValue, BiConsumer<ResizableCycleButton<?>, Boolean> onValueChanged) {
+        ResizableCycleButton<Boolean> btn = ResizableCycleButton.onOffBuilder(initialValue)
             .create(x, y, width, height, text, (b, v) -> onValueChanged.accept(b, v))
         ;
 		

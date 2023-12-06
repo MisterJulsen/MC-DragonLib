@@ -12,6 +12,7 @@ import de.mrjulsen.mcdragonlib.client.gui.widgets.IExtendedAreaWidget;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ItemButton;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ModSlider;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ResizableButton;
+import de.mrjulsen.mcdragonlib.client.gui.widgets.ResizableCycleButton;
 import de.mrjulsen.mcdragonlib.common.ITranslatableEnum;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -72,13 +73,13 @@ public abstract class CommonScreen extends net.minecraft.client.gui.screens.Scre
         return addRenderableWidget(btn, x, y, width, height, tooltip);
 	}
 
-    protected <T extends Enum<T> & ITranslatableEnum> CycleButton<T> addCycleButton(String modid, Class<T> clazz, int x, int y, int width, int height, Component text, T initialValue, BiConsumer<CycleButton<?>, T> onValueChanged, Tooltip tooltip) {
-        CycleButton<T> btn = GuiUtils.createCycleButton(modid, clazz, x, y, width, height, text, initialValue, onValueChanged);
+    protected <T extends Enum<T> & ITranslatableEnum> ResizableCycleButton<T> addCycleButton(String modid, Class<T> clazz, int x, int y, int width, int height, Component text, T initialValue, BiConsumer<ResizableCycleButton<?>, T> onValueChanged, Tooltip tooltip) {
+        ResizableCycleButton<T> btn = GuiUtils.createCycleButton(modid, clazz, x, y, width, height, text, initialValue, onValueChanged);
         return addRenderableWidget(btn, x, y, width, height, tooltip);
 	}
 
-    protected CycleButton<Boolean> addOnOffButton(int x, int y, int width, int height, Component text, boolean initialValue, BiConsumer<CycleButton<?>, Boolean> onValueChanged, Tooltip tooltip) {
-        CycleButton<Boolean> btn = GuiUtils.createOnOffButton(x, y, width, height, text, initialValue, onValueChanged);
+    protected ResizableCycleButton<Boolean> addOnOffButton(int x, int y, int width, int height, Component text, boolean initialValue, BiConsumer<ResizableCycleButton<?>, Boolean> onValueChanged, Tooltip tooltip) {
+        ResizableCycleButton<Boolean> btn = GuiUtils.createOnOffButton(x, y, width, height, text, initialValue, onValueChanged);
         return addRenderableWidget(btn, x, y, width, height, tooltip);
 	}
 
