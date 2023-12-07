@@ -61,7 +61,7 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
         switch (getAlignment()) {            
             case LEFT:
                 if (this.getMessage() != null) {
-                    font.draw(pPoseStack, getMessage(), x + 2 + 16, y + height / 2 - font.lineHeight / 2, getFontColor());
+                    font.draw(pPoseStack, getMessage(), x + 2 + 16 + 4, y + height / 2 - font.lineHeight / 2, getFontColor());
                 }
                 Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, x + 2, y + height / 2 - 8);
                 break;
