@@ -48,6 +48,7 @@ public class Tooltip {
     }
 
     public Tooltip withMaxWidth(int maxWidth) {
+        this.maxWidth = maxWidth;
         return this;
     }
 
