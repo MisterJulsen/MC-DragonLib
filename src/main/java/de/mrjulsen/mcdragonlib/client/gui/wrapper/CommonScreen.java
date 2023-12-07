@@ -107,6 +107,24 @@ public abstract class CommonScreen extends net.minecraft.client.gui.screens.Scre
     }
 
     @Override
+    public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
+        if (super.mouseScrolled(pMouseX, pMouseY, pDelta)) {
+            return true;
+        }
+        boolean[] b = new boolean[] { false };
+        this.renderables.stream().filter(x -> x instanceof IExtendedAreaWidget && x instanceof GuiEventListener g).forEach(x -> {
+            if (((x instanceof IExtendedAreaWidget exw && exw.isInArea(pMouseX, pMouseY))) && !b[0]) {
+                b[0] = ((GuiEventListener)x).mouseScrolled(pMouseX, pMouseY, pDelta);
+                if (b[0]) {
+                    return;
+                }
+            }
+        });
+        return b[0];
+    }
+
+    /*
+    @Override
     public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
         boolean[] b = new boolean[] { false };
         this.renderables.stream().filter(x -> x instanceof GuiEventListener g && this.getFocused() == g && g.isMouseOver(pMouseX, pMouseY)).forEach(x -> {
@@ -140,4 +158,5 @@ public abstract class CommonScreen extends net.minecraft.client.gui.screens.Scre
         super.mouseReleased(pMouseX, pMouseY, pButton);
         return b[0];
     }
+    */
 }
