@@ -126,7 +126,7 @@ public final class GuiUtils {
         List<FormattedText> c = new ArrayList<>();
         T enumValue = enumClass.getEnumConstants()[0];
         c.addAll(screen.getMinecraft().font.splitter.splitLines(translate(enumValue.getEnumDescriptionTranslationKey(modid)), maxWidth, Style.EMPTY).stream().toList());
-        c.add(text(""));
+        c.add(text(" "));
         c.addAll(Arrays.stream(enumClass.getEnumConstants()).map((tr) -> {
             return text(String.format("§l> %s§r§7\n%s", translate(tr.getValueTranslationKey(modid)).getString(), translate(tr.getValueInfoTranslationKey(modid)).getString()));
         }).map((x) -> screen.getMinecraft().font.splitter.splitLines(x, maxWidth, Style.EMPTY).stream().toList()).flatMap(List::stream).collect(Collectors.toList()));
@@ -138,7 +138,7 @@ public final class GuiUtils {
         List<FormattedText> c = new ArrayList<>();
         T enumValue = enumClass.getEnumConstants()[0];
         c.add(translate(enumValue.getEnumDescriptionTranslationKey(modid)));
-        c.add(text(""));
+        c.add(text(" "));
         c.addAll(Arrays.stream(enumClass.getEnumConstants()).map((tr) -> {
             return text(String.format("§l> %s§r§7\n%s", translate(tr.getValueTranslationKey(modid)).getString(), translate(tr.getValueInfoTranslationKey(modid)).getString()));
         }).toList());
