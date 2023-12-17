@@ -19,6 +19,7 @@ public class DragonLibConstants {
     
     public static final int TICKS_PER_DAY = Level.TICKS_PER_DAY;
     public static final byte TPS = 1000 / MinecraftServer.MS_PER_TICK;
+	/** float size of one pixel. */ public static final float PIXEL = 1.0F / 16.0F;
 
     public static final ResourceLocation UI = new ResourceLocation(DRAGONLIB_MODID, "textures/gui/ui.png");
 
