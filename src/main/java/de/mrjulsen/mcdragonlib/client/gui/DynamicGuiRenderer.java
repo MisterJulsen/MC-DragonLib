@@ -60,7 +60,7 @@ public class DynamicGuiRenderer {
     }
 
     public static void renderContainerBackground(PoseStack poseStack, int x, int y, int w, int h) {
-        int startU = 10, startV = 10;
+        int startU = 10, startV = 15;
         GuiUtils.blit(UI, poseStack, x, y, 2, 2, startU, startV, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top left
         GuiUtils.blit(UI, poseStack, x, y + h - 2, 2, 2, startU, startV + 3, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom left
         GuiUtils.blit(UI, poseStack, x + w - 2, y, 2, 2, startU + 3, startV, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top right
