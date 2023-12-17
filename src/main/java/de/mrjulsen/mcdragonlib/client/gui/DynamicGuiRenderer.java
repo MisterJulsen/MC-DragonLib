@@ -13,6 +13,10 @@ public class DynamicGuiRenderer {
     public static final int TEXTURE_HEIGHT = 32;
     protected static final int UI_SECTION_SIZE = 5;
 
+    public static void renderArea(PoseStack poseStack, GuiAreaDefinition area, AreaStyle style, ButtonState state) {
+        renderArea(poseStack, area.getLeft(), area.getTop(), area.getWidth(), area.getHeight(), style, state);
+    }
+
     public static void renderArea(PoseStack poseStack, int x, int y, int w, int h, AreaStyle color, ButtonState style) {
 
         if (color == AreaStyle.NATIVE) {
@@ -51,6 +55,10 @@ public class DynamicGuiRenderer {
         GuiUtils.blit(UI, poseStack, x + 2, y + 2, w - 4, h - 4, startU + 2, startV + 2, 1, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT);
     }
 
+    public static void renderContainerBackground(PoseStack poseStack, GuiAreaDefinition area) {
+        renderContainerBackground(poseStack, area.getLeft(), area.getTop(), area.getWidth(), area.getHeight());
+    }
+
     public static void renderContainerBackground(PoseStack poseStack, int x, int y, int w, int h) {
         int startU = 10, startV = 10;
         GuiUtils.blit(UI, poseStack, x, y, 2, 2, startU, startV, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top left
@@ -66,7 +74,11 @@ public class DynamicGuiRenderer {
         GuiUtils.blit(UI, poseStack, x + 2, y + 2, w - 4, h - 4, startU + 2, startV + 2, 1, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT);
     }
 
-    public static void renderWindow(PoseStack poseStack, int x, int y, int w, int h) {        
+    public static void renderWindow(PoseStack poseStack, GuiAreaDefinition area) {
+        renderWindow(poseStack, area.getLeft(), area.getTop(), area.getWidth(), area.getHeight());
+    }
+
+    public static void renderWindow(PoseStack poseStack, int x, int y, int w, int h) {
         int startU = 0, startV = 15;
 
         GuiUtils.blit(UI, poseStack, x, y, 4, 4, startU, startV, 4, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top left
