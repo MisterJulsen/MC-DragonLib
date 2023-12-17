@@ -22,6 +22,7 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
     public static final int DEFAULT_BUTTON_HEIGHT = 18;
 
     private ItemStack item;
+    private boolean renderItemTooltip = true;
 
     public ItemButton(ButtonType type, AreaStyle color, ItemStack item, WidgetsCollection collection, int pX, int pY, int w, int h, Consumer<Button> onClick) {
         super(type, color, collection, pX, pY, w, h, item.getHoverName(), onClick);
@@ -50,6 +51,11 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
 
     public ItemButton withItem(ItemStack stack) {
         this.item = stack;
+        return this;
+    }
+
+    public ItemButton withDefaultItemTooltip(boolean b) {
+        this.renderItemTooltip = b;
         return this;
     }
 
@@ -85,13 +91,13 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
     }
 
     public void renderTooltip(Screen parent, PoseStack pPoseStack, int pMouseX, int pMouseY) {
-        if (isMouseOver(pMouseX, pMouseY)) {
+        if (isMouseOver(pMouseX, pMouseY) && renderItemTooltip) {
             GuiUtils.renderTooltip(parent, this, parent.getTooltipFromItem(getItem()), -1, pPoseStack, pMouseX, pMouseY);
         }
     }
 
     public static void renderAllItemButtonTooltips(Screen parent, PoseStack pPoseStack, int pMouseX, int pMouseY) {
-        parent.renderables.stream().filter(x -> x instanceof ItemButton b && b.isMouseOver(pMouseX, pMouseY)).forEach(x -> ((ItemButton)x).renderTooltip(parent, pPoseStack, pMouseX, pMouseY));
+        parent.renderables.stream().filter(x -> x instanceof ItemButton b && b.isMouseOver(pMouseX, pMouseY) && b.renderItemTooltip).forEach(x -> ((ItemButton)x).renderTooltip(parent, pPoseStack, pMouseX, pMouseY));
     }
 }
 
