@@ -2,10 +2,10 @@ package de.mrjulsen.mcdragonlib;
 
 import com.mojang.logging.LogUtils;
 
-import de.mrjulsen.mcdragonlib.internal.ClientProxy;
-import de.mrjulsen.mcdragonlib.internal.ServerProxy;
-import de.mrjulsen.mcdragonlib.internal.content.ModBlocks;
-import de.mrjulsen.mcdragonlib.internal.content.ModItems;
+import de.mrjulsen.mcdragonlib.internal.DragonLibClientProxy;
+import de.mrjulsen.mcdragonlib.internal.DragonLibServerProxy;
+import de.mrjulsen.mcdragonlib.internal.content.DragonLibBlocks;
+import de.mrjulsen.mcdragonlib.internal.content.DragonLibItems;
 import de.mrjulsen.mcdragonlib.setup.IProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,14 +20,14 @@ import org.slf4j.Logger;
 public final class DragonLib {
     
     public static final Logger LOGGER = LogUtils.getLogger();
-    public final IProxy PROXY = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> ServerProxy::new);
+    public final IProxy PROXY = DistExecutor.safeRunForDist(() -> DragonLibClientProxy::new, () -> DragonLibServerProxy::new);
 
     public DragonLib() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         eventBus.addListener(this::setup);
 
-        ModBlocks.register(eventBus);
-        ModItems.register(eventBus);
+        DragonLibBlocks.register(eventBus);
+        DragonLibItems.register(eventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
     }

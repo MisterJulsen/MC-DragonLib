@@ -9,7 +9,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = DragonLibConstants.DRAGONLIB_MODID)
-public final class GameEvents {
+public final class DragonLibGameEvents {
 
     @SubscribeEvent
     public static void onServerTick(ServerTickEvent event) {

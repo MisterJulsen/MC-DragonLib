@@ -4,9 +4,9 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 
-public class DragonBlock extends Block {
+public class DragonLibSampleBlock extends Block {
 
-    public DragonBlock(Properties properties) {
+    public DragonLibSampleBlock(Properties properties) {
         super(properties);
     }
 
