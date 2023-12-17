@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import de.mrjulsen.mcdragonlib.client.gui.GuiUtils;
@@ -68,6 +69,10 @@ public abstract class CommonScreen extends net.minecraft.client.gui.screens.Scre
         return tooltip;
     }
 
+    protected boolean removeTooltips(Predicate<? super Tooltip> condition) {
+        return tooltips.removeIf(condition);
+    }
+
     protected ResizableButton addButton(int x, int y, int width, int height, Component text, Consumer<Button> onClick, Tooltip tooltip) {
         ResizableButton btn = GuiUtils.createButton(x, y, width, height, text, onClick);
         return addRenderableWidget(btn, x, y, width, height, tooltip);
@@ -122,41 +127,4 @@ public abstract class CommonScreen extends net.minecraft.client.gui.screens.Scre
         });
         return b[0];
     }
-
-    /*
-    @Override
-    public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
-        boolean[] b = new boolean[] { false };
-        this.renderables.stream().filter(x -> x instanceof GuiEventListener g && this.getFocused() == g && g.isMouseOver(pMouseX, pMouseY)).forEach(x -> {
-            if (((GuiEventListener)x).mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY) && !b[0])
-                b[0] = true;
-        });
-        super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
-        return b[0];
-    }
-
-    @Override
-    public boolean mouseScrolled(double pMouseX, double pMouseY, double pDelta) {
-        boolean[] b = new boolean[] { false };
-        this.renderables.stream().filter(x -> x instanceof GuiEventListener g).forEach(x -> {
-            if (((((GuiEventListener)x).mouseScrolled(pMouseX, pMouseY, pDelta) && ((GuiEventListener)x).isMouseOver(pMouseX, pMouseY)) || (x instanceof IExtendedAreaWidget exw && exw.isInArea(pMouseX, pMouseY))) && !b[0]) {
-                b[0] = true;
-            }
-        });
-        super.mouseScrolled(pMouseX, pMouseY, pDelta);
-        return b[0];
-    }
-
-    @Override
-    public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
-        boolean[] b = new boolean[] { false };
-        this.renderables.stream().filter(x -> x instanceof GuiEventListener g && this.getFocused() == g && g.isMouseOver(pMouseX, pMouseY)).forEach(x -> {
-            if (((GuiEventListener)x).mouseReleased(pMouseX, pMouseY, pButton) && !b[0]) {
-                b[0] = true;
-            }
-        });
-        super.mouseReleased(pMouseX, pMouseY, pButton);
-        return b[0];
-    }
-    */
 }

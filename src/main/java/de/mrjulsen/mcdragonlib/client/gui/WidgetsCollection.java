@@ -60,6 +60,11 @@ public class WidgetsCollection {
     public void clear() {
         components.clear();
     }
+
+    public void clear(Consumer<AbstractWidget> onRemove) {
+        performForEach(x -> onRemove.accept(x));
+        clear();
+    }
 }
 
 

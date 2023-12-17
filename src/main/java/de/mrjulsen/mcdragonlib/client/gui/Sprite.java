@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 public class Sprite {
     private final ResourceLocation texture;
     private final int textureId;
+
     private final int textureWidth;
     private final int textureHeight;
     private final int u;

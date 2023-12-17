@@ -294,6 +294,13 @@ public final class GuiUtils {
     public static TextComponent text(String key) {
         return new TextComponent(key);
     }
-	
+
+    public static void renderBoundingBox(PoseStack poseStack, GuiAreaDefinition area, int fillColor, int borderColor) {
+        GuiComponent.fill(poseStack, area.getLeft(), area.getTop(), area.getRight(), area.getBottom(), fillColor);
+        GuiComponent.fill(poseStack, area.getLeft(), area.getTop() - 1, area.getRight(), area.getTop(), borderColor);
+        GuiComponent.fill(poseStack, area.getLeft(), area.getBottom(), area.getRight(), area.getBottom() + 1, borderColor);
+        GuiComponent.fill(poseStack, area.getLeft() - 1, area.getTop() - 1, area.getLeft(), area.getBottom() + 1, borderColor);
+        GuiComponent.fill(poseStack, area.getRight(), area.getTop() - 1, area.getRight() + 1, area.getBottom() + 1, borderColor);
+    }	
 }
 
