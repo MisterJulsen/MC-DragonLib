@@ -1,5 +1,6 @@
 package de.mrjulsen.mcdragonlib.client.gui;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,12 +36,20 @@ public class Tooltip {
         return new Tooltip(text.stream().map(x -> (FormattedText)GuiUtils.text(x)).toList());
     }
 
-    public static Tooltip of(FormattedText FormattedText) {
-        return new Tooltip(FormattedText == null ? null : List.of(FormattedText));
+    public static Tooltip of(String... texts) {
+        return new Tooltip(Arrays.stream(texts).map(x -> (FormattedText)GuiUtils.text(x)).toList());
     }
 
-    public static Tooltip of(List<FormattedText> FormattedTexts) {
-        return new Tooltip(FormattedTexts);
+    public static Tooltip of(FormattedText formattedText) {
+        return new Tooltip(formattedText == null ? null : List.of(formattedText));
+    }
+
+    public static Tooltip of(List<FormattedText> formattedTexts) {
+        return new Tooltip(formattedTexts);
+    }
+
+    public static Tooltip of(FormattedText... formattedTexts) {
+        return new Tooltip(Arrays.stream(formattedTexts).toList());
     }
 
     public static <E extends Enum<E> & ITranslatableEnum> Tooltip of(String modid, Class<E> enumClass) {
