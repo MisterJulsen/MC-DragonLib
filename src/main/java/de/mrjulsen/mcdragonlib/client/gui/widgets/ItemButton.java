@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -24,8 +25,8 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
     private ItemStack item;
     private boolean renderItemTooltip = true;
 
-    public ItemButton(ButtonType type, AreaStyle color, ItemStack item, WidgetsCollection collection, int pX, int pY, int w, int h, Consumer<Button> onClick) {
-        super(type, color, collection, pX, pY, w, h, item.getHoverName(), onClick);
+    public ItemButton(ButtonType type, AreaStyle color, ItemStack item, WidgetsCollection collection, int pX, int pY, int w, int h, Component customText, Consumer<Button> onClick) {
+        super(type, color, collection, pX, pY, w, h, customText == null ? item.getHoverName() : customText, onClick);
         withItem(item);
 
         if (color == AreaStyle.NATIVE) {
@@ -33,16 +34,16 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
         }
     }
 
-    public ItemButton(ButtonType type, AreaStyle color, ItemStack item, int pX, int pY, int w, int h, Consumer<Button> onClick) {
-        this(type, color, item, null, pX, pY, w, h, onClick);
+    public ItemButton(ButtonType type, AreaStyle color, ItemStack item, int pX, int pY, int w, int h, Component customText, Consumer<Button> onClick) {
+        this(type, color, item, null, pX, pY, w, h, customText, onClick);
     }
 
-    public ItemButton(ButtonType type, AreaStyle color, ItemStack item, WidgetsCollection collection, int pX, int pY, Consumer<Button> onClick) {
-        this(type, color, item, collection, pX, pY, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, onClick);
+    public ItemButton(ButtonType type, AreaStyle color, ItemStack item, WidgetsCollection collection, int pX, int pY, Component customText, Consumer<Button> onClick) {
+        this(type, color, item, collection, pX, pY, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, customText, onClick);
     }
 
-    public ItemButton(ButtonType type, AreaStyle color, ItemStack item, int pX, int pY, Consumer<Button> onClick) {
-        this(type, color, item, pX, pY, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, onClick);
+    public ItemButton(ButtonType type, AreaStyle color, ItemStack item, int pX, int pY, Component customText, Consumer<Button> onClick) {
+        this(type, color, item, pX, pY, DEFAULT_BUTTON_WIDTH, DEFAULT_BUTTON_HEIGHT, customText, onClick);
     }
 
     public ItemStack getItem() {
