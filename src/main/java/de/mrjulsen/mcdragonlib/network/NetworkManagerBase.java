@@ -23,7 +23,6 @@ public abstract class NetworkManagerBase<N extends NetworkManagerBase<N>> {
     private static int currentId = 0;
 
     public final SimpleChannel MOD_CHANNEL;
-    
 
     protected NetworkManagerBase(String modid, String channelName, String protocolVersion) {
         PROTOCOL_VERSION = String.valueOf(1);
@@ -46,7 +45,7 @@ public abstract class NetworkManagerBase<N extends NetworkManagerBase<N>> {
 
     public static <T extends NetworkManagerBase<T>> T create(Class<T> networkManager, String modid, String channelName, String protocolVersion) {        
         try {
-            return networkManager.getConstructor(String.class, String.class).newInstance(channelName, protocolVersion);
+            return networkManager.getConstructor(String.class, String.class, String.class).newInstance(modid, channelName, protocolVersion);
         } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             e.printStackTrace();
             DragonLib.LOGGER.error("Unable to create NetworkManager.", e);
