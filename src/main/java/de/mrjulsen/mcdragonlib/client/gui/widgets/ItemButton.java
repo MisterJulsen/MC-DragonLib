@@ -68,24 +68,24 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
         switch (getAlignment()) {            
             case LEFT:
                 if (this.getMessage() != null) {
-                    font.draw(pPoseStack, getMessage(), x + 2 + 16 + 4, y + height / 2 - font.lineHeight / 2, getFontColor());
+                    font.draw(pPoseStack, getMessage(), getX() + 2 + 16 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, x + 2, y + height / 2 - 8);
+                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, getX() + 2, getY() + height / 2 - 8);
                 break;
             case RIGHT:
                 if (this.getMessage() != null) {
                     labelWidth = font.width(this.getMessage()) + 4;
-                    font.draw(pPoseStack, getMessage(), x + width - 2 - labelWidth + 4, y + height / 2 - font.lineHeight / 2, getFontColor());
+                    font.draw(pPoseStack, getMessage(), getX() + width - 2 - labelWidth + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, x + width - 2 - labelWidth - 16, y + height / 2 - 8);
+                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, getX() + width - 2 - labelWidth - 16, getY() + height / 2 - 8);
                 break;
             case CENTER:
             default:
                 if (this.getMessage() != null) {
                     labelWidth = font.width(this.getMessage()) + 4;
-                    font.draw(pPoseStack, getMessage(), x + width / 2 + 8 - labelWidth / 2 + 4, y + height / 2 - font.lineHeight / 2, getFontColor());
+                    font.draw(pPoseStack, getMessage(), getX() + width / 2 + 8 - labelWidth / 2 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, x + width / 2 - 8 - labelWidth / 2, y + height / 2 - 8);
+                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, getX() + width / 2 - 8 - labelWidth / 2, getY() + height / 2 - 8);
                 break;
         }
         

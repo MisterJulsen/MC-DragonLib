@@ -30,7 +30,7 @@ public abstract class AbstractImageButton<T extends AbstractImageButton<T>> exte
     }
 
     public AbstractImageButton(ButtonType type, AreaStyle style, WidgetsCollection collection, int pX, int pY, int w, int h, Component pMessage, Consumer<Button> onClick) {
-        super(pX, pY, w, h, pMessage, (btn) -> onClick.accept(btn), NO_TOOLTIP);
+        super(pX, pY, w, h, pMessage, (btn) -> onClick.accept(btn), DEFAULT_NARRATION);
         withButtonType(type);
         withStyle(style);
 
@@ -125,7 +125,7 @@ public abstract class AbstractImageButton<T extends AbstractImageButton<T>> exte
     @Override
     public void renderButton(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft minecraft = Minecraft.getInstance();
-        DynamicGuiRenderer.renderArea(pPoseStack, x, y, width, height, this.style, active ? (selected ? ButtonState.SUNKEN : (isHovered ? ButtonState.SELECTED : ButtonState.BUTTON)) : ButtonState.RAISED);
+        DynamicGuiRenderer.renderArea(pPoseStack, getX(), getY(), width, height, this.style, active ? (selected ? ButtonState.SUNKEN : (isHovered ? ButtonState.SELECTED : ButtonState.BUTTON)) : ButtonState.RAISED);
         this.renderBg(pPoseStack, minecraft, pMouseX, pMouseY);
         renderImage(pPoseStack, pMouseX, pMouseY, pPartialTick);
     }
