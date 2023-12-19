@@ -1,13 +1,11 @@
 package de.mrjulsen.mcdragonlib.internal;
 
 import de.mrjulsen.mcdragonlib.client.gui.GuiUtils;
-import de.mrjulsen.mcdragonlib.setup.IProxy;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-public class DragonLibClientProxy implements IProxy {
+public class DragonLibClientProxy {
 
-    @Override
-    public void setup(FMLCommonSetupEvent event) {
+    public static void setup(final FMLClientSetupEvent event) {
         GuiUtils.init();
     }
     
