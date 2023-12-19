@@ -171,7 +171,7 @@ public abstract class DragonLibWidgetBase extends GuiComponent implements Render
         return this.visible && this.active;
     }
 
-    public void setFocused(boolean pFocused) {
+    protected void setFocused(boolean pFocused) {
         this.focused = pFocused;
     }
 
