@@ -58,11 +58,6 @@ public final class GuiUtils {
 	public static CustomRenderTarget getFramebuffer() {
 		return framebuffer;
 	}
-
-    public static void updateWindowSize(Window window) {
-        if (getFramebuffer() != null)
-            getFramebuffer().resize(window.getWidth(), window.getHeight(), Minecraft.ON_OSX);
-    }
     
     /**
 	 * @see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/foundation/gui/UIRenderHelper.java
