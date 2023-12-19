@@ -32,7 +32,6 @@ public class CustomRenderTarget extends RenderTarget {
         float tx = (float) viewWidth / (float) width;
         float ty = (float) viewHeight / (float) height;
 
-        RenderSystem.enableTexture();
         RenderSystem.enableDepthTest();
         RenderSystem.setShader(() -> Minecraft.getInstance().gameRenderer.blitShader);
         RenderSystem.getShader().setSampler("DiffuseSampler", colorTextureId);

@@ -22,16 +22,8 @@ public class ModEditBox extends EditBox {
     }
 
     @Override
-    protected void setFocused(boolean pFocused) {
+    public void setFocused(boolean pFocused) {
         super.setFocused(pFocused);
-        if (onFocusChanged != null) {
-            onFocusChanged.accept(this, pFocused);
-        }
-    }
-
-    @Override
-    public void onFocusedChanged(boolean pFocused) {
-        super.onFocusedChanged(pFocused);
         if (onFocusChanged != null) {
             onFocusChanged.accept(this, pFocused);
         }

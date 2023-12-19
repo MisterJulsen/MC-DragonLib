@@ -70,7 +70,7 @@ public abstract class NetworkManagerBase<N extends NetworkManagerBase<N>> {
     }
 
     public <T> void sendToClient(IPacketBase<?> o, ServerPlayer player) {
-        MOD_CHANNEL.sendTo(o, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
+        MOD_CHANNEL.sendTo(o, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public <T> void sendToServer(IPacketBase<?> o) {
@@ -78,7 +78,7 @@ public abstract class NetworkManagerBase<N extends NetworkManagerBase<N>> {
     }
 
     public <T> void send(IPacketBase<?> o, Player player) {
-        MOD_CHANNEL.sendTo(o, player instanceof ServerPlayer serverPlayer ? serverPlayer.connection.getConnection() : Minecraft.getInstance().getConnection().getConnection(), o.getDirection());
+        MOD_CHANNEL.sendTo(o, player instanceof ServerPlayer serverPlayer ? serverPlayer.connection.connection : Minecraft.getInstance().getConnection().getConnection(), o.getDirection());
     }
 
     public static void executeOnClient(Runnable task) {        
