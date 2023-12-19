@@ -1,12 +1,12 @@
 package de.mrjulsen.mcdragonlib.internal;
 
-import de.mrjulsen.mcdragonlib.setup.IProxy;
+import de.mrjulsen.mcdragonlib.DragonLib;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
-public class DragonLibServerProxy implements IProxy {
+public class DragonLibServerProxy {
 
-    @Override
-    public void setup(FMLCommonSetupEvent event) {
+    public static void setup(final FMLCommonSetupEvent event) {
+        DragonLib.LOGGER.info(" -=- 🐉 Init Mod DRAGON LIB by MRJULSEN 🐉 -=- ");
     }
 
 }
