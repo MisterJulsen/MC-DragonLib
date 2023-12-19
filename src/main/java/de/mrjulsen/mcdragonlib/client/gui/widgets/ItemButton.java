@@ -64,28 +64,34 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
     @SuppressWarnings("resource")
     public void renderImage(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         Font font = Minecraft.getInstance().font;
-        int labelWidth = 0;
-        switch (getAlignment()) {            
-            case LEFT:
-                if (this.getMessage() != null) {
-                    font.draw(pPoseStack, getMessage(), getX() + 2 + 16 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
-                }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, getX() + 2, getY() + height / 2 - 8);
-                break;
+        int labelWidth = font.width(this.getMessage()) + 4;
+
+        if (getAlignment() == Alignment.LEFT || labelWidth > getWidth() - 22) {
+            if (this.getMessage() != null) {
+                int i = this.getX() + 20;
+                int j = this.getX() + this.getWidth() - 2;
+                renderScrollingString(pPoseStack, font, getMessage(), i, getY(), j, getY() + getHeight(), getFontColor());
+            }
+            Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack, item, getX() + 2, getY() + height / 2 - 8);
+            return;
+        }
+
+        switch (getAlignment()) { 
             case RIGHT:
                 if (this.getMessage() != null) {
-                    labelWidth = font.width(this.getMessage()) + 4;
                     font.draw(pPoseStack, getMessage(), getX() + width - 2 - labelWidth + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, getX() + width - 2 - labelWidth - 16, getY() + height / 2 - 8);
+                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack, item, getX() + width - 2 - labelWidth - 16, getY() + height / 2 - 8);
                 break;
             case CENTER:
             default:
                 if (this.getMessage() != null) {
-                    labelWidth = font.width(this.getMessage()) + 4;
+                    int i = this.getX() + 22;
+                    int j = this.getX() + this.getWidth() - 2;
+                    renderScrollingString(pPoseStack, font, getMessage(), i, getY(), j, getY() + getHeight(), getFontColor());
                     font.draw(pPoseStack, getMessage(), getX() + width / 2 + 8 - labelWidth / 2 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, getX() + width / 2 - 8 - labelWidth / 2, getY() + height / 2 - 8);
+                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack, item, getX() + width / 2 - 8 - labelWidth / 2, getY() + height / 2 - 8);
                 break;
         }
         
