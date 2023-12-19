@@ -34,9 +34,8 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 public final class GuiUtils {
@@ -58,6 +57,11 @@ public final class GuiUtils {
 	public static CustomRenderTarget getFramebuffer() {
 		return framebuffer;
 	}
+
+    public static void updateWindowSize(Window window) {
+        if (getFramebuffer() != null)
+            getFramebuffer().resize(window.getWidth(), window.getHeight(), Minecraft.ON_OSX);
+    }
     
     /**
 	 * @see https://github.com/Creators-of-Create/Create/blob/mc1.18/dev/src/main/java/com/simibubi/create/foundation/gui/UIRenderHelper.java
@@ -87,7 +91,7 @@ public final class GuiUtils {
 		matrixStack.pushPose();
 		matrixStack.translate(x, y, 0);
 		matrixStack.scale(w, h, 1);
-		net.minecraftforge.client.gui.GuiUtils.drawGradientRect(matrixStack.last()
+		net.minecraftforge.client.gui.ScreenUtils.drawGradientRect(matrixStack.last()
 			.pose(), -100, 0, 0, 1, 1, 0xff000000, 0xff000000);
 		matrixStack.popPose();
 
@@ -266,7 +270,7 @@ public final class GuiUtils {
                     if (this.drawString) {
                         this.setMessage(text("").append(prefix).append(": ").append(this.getValueString()).append(suffix));
                     } else {
-                        this.setMessage(TextComponent.EMPTY);
+                        this.setMessage(Component.empty());
                     } 
                     return;
                 }                
@@ -283,16 +287,16 @@ public final class GuiUtils {
 		return slider;
     }
 
-    public static TranslatableComponent translate(String key, Object... args) {
-        return new TranslatableComponent(key, args);
+    public static MutableComponent translate(String key, Object... args) {
+        return Component.translatable(key, args);
     }
 
-    public static TranslatableComponent translate(String key) {
-        return new TranslatableComponent(key);
+    public static MutableComponent translate(String key) {
+        return Component.translatable(key);
     }
 
-    public static TextComponent text(String key) {
-        return new TextComponent(key);
+    public static MutableComponent text(String key) {
+        return Component.literal(key);
     }
 
     public static void renderBoundingBox(PoseStack poseStack, GuiAreaDefinition area, int fillColor, int borderColor) {
