@@ -109,9 +109,17 @@ public final class GuiUtils {
 		GL11.glDisable(GL11.GL_STENCIL_TEST);
 	}
 
-    @SuppressWarnings("resource")
     public static <W extends AbstractWidget, T extends FormattedText> boolean renderTooltip(Screen screen, W widget, List<T> lines, int maxWidth, PoseStack stack, int mouseX, int mouseY) {
-        if (widget.isMouseOver(mouseX, mouseY)) {
+        return renderTooltipWithScrollOffset(screen, widget, lines, maxWidth, stack, mouseX, mouseY, 0, 0);
+    }
+
+    public static <T extends FormattedText> boolean renderTooltip(Screen screen, GuiAreaDefinition area, List<T> lines, int maxWidth, PoseStack stack, int mouseX, int mouseY) {
+        return renderTooltipWithScrollOffset(screen, area, lines, maxWidth, stack, mouseX, mouseY, 0, 0);
+    }
+
+    @SuppressWarnings("resource")
+    public static <W extends AbstractWidget, T extends FormattedText> boolean renderTooltipWithScrollOffset(Screen screen, W widget, List<T> lines, int maxWidth, PoseStack stack, int mouseX, int mouseY, int xOffset, int yOffset) {
+        if (widget.isMouseOver(mouseX + xOffset, mouseY + yOffset)) {
             screen.renderComponentTooltip(stack, getTooltipData(screen, lines, maxWidth), mouseX, mouseY, screen.getMinecraft().font);
 			return true;
         }
@@ -119,8 +127,8 @@ public final class GuiUtils {
     }
 
 	@SuppressWarnings("resource")
-    public static <T extends FormattedText> boolean renderTooltip(Screen screen, GuiAreaDefinition area, List<T> lines, int maxWidth, PoseStack stack, int mouseX, int mouseY) {
-        if (area.isInBounds(mouseX, mouseY)) {
+    public static <T extends FormattedText> boolean renderTooltipWithScrollOffset(Screen screen, GuiAreaDefinition area, List<T> lines, int maxWidth, PoseStack stack, int mouseX, int mouseY, int xOffset, int yOffset) {
+        if (area.isInBounds(mouseX + xOffset, mouseY + yOffset)) {
             screen.renderComponentTooltip(stack, getTooltipData(screen, lines, maxWidth), mouseX, mouseY, screen.getMinecraft().font);
 			return true;
         }

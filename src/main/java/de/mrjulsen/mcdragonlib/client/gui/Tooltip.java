@@ -15,12 +15,12 @@ public class Tooltip {
     public static final int WIDTH_UNDEFINED = -1;
 
     private final List<FormattedText> lines;
-    private int maxWidth = WIDTH_UNDEFINED;
-    private GuiAreaDefinition assignedArea;
-    private AbstractWidget assignedWidget;
-    private boolean visible = true;
+    protected int maxWidth = WIDTH_UNDEFINED;
+    protected GuiAreaDefinition assignedArea = null;
+    protected AbstractWidget assignedWidget = null;
+    protected boolean visible = true;
 
-    private Tooltip(List<FormattedText> lines) {
+    protected Tooltip(List<FormattedText> lines) {
         this.lines = lines;
     }
 
@@ -77,6 +77,13 @@ public class Tooltip {
     }
 
 
+    public GuiAreaDefinition getAssignedArea() {
+        return assignedArea;
+    }
+
+    public AbstractWidget getAssignedWidget() {
+        return assignedWidget;
+    }
 
     public List<FormattedText> getLines() {
         return lines;
@@ -91,16 +98,20 @@ public class Tooltip {
     }
 
     public void render(Screen screen, PoseStack poseStack, int mouseX, int mouseY) {
+        render(screen, poseStack, mouseX, mouseY, 0, 0);
+    }
+
+    public void render(Screen screen, PoseStack poseStack, int mouseX, int mouseY, int xOffset, int yOffset) {
         if (lines.size() <= 0) {
             return;
         }
 
         if (assignedWidget != null) {
-            GuiUtils.renderTooltip(screen, assignedWidget, getLines(), getMaxWidth() > 0 ? getMaxWidth() : screen.width, poseStack, mouseX, mouseY);            
+            GuiUtils.renderTooltipWithScrollOffset(screen, assignedWidget, getLines(), getMaxWidth() > 0 ? getMaxWidth() : screen.width, poseStack, mouseX, mouseY, xOffset, yOffset);            
         } else if (assignedArea != null) {
-            GuiUtils.renderTooltip(screen, assignedArea, getLines(), getMaxWidth() > 0 ? getMaxWidth() : screen.width, poseStack, mouseX, mouseY);  
+            GuiUtils.renderTooltipWithScrollOffset(screen, assignedArea, getLines(), getMaxWidth() > 0 ? getMaxWidth() : screen.width, poseStack, mouseX, mouseY, xOffset, yOffset);  
         } else {
-            GuiUtils.renderTooltip(screen, GuiAreaDefinition.of(screen), getLines(), getMaxWidth() > 0 ? getMaxWidth() : screen.width, poseStack, mouseX, mouseY); 
+            GuiUtils.renderTooltipWithScrollOffset(screen, GuiAreaDefinition.of(screen), getLines(), getMaxWidth() > 0 ? getMaxWidth() : screen.width, poseStack, mouseX, mouseY, xOffset, yOffset); 
         }        
     }
 }
