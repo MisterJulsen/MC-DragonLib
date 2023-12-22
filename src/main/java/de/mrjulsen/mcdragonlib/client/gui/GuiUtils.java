@@ -176,6 +176,32 @@ public final class GuiUtils {
         }
     }
 
+    public static boolean editBoxPositiveNumberFilter(String input) {
+        if (input.isEmpty()) {
+            return true;
+        } else {
+            try {
+                int i = Integer.parseInt(input);
+                return i > 0;
+            } catch (NumberFormatException var3) {
+                return false;
+            }
+        }
+    }
+
+    public static boolean editBoxNonNegativeNumberFilter(String input) {
+        if (input.isEmpty()) {
+            return true;
+        } else {
+            try {
+                int i = Integer.parseInt(input);
+                return i >= 0;
+            } catch (NumberFormatException var3) {
+                return false;
+            }
+        }
+    }
+
 	public static void setTexture(ResourceLocation texture) {
         RenderSystem.setShaderTexture(0, texture);
 	}
