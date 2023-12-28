@@ -2,7 +2,7 @@
 
 ![Logo](https://github.com/MisterJulsen/MC-DragonLib/blob/1.18.2/src/main/resources/mod_logo.png)
 
-DragonLib is a small and simple Mionecraft Forge Library Mod which contains code that is used by most of my mods. This mod adds nothing special on its own. New functionality my be added at any time when needed by my mods.
+DragonLib is a small and simple Minecraft Forge Library Mod which contains code that is used by most of my mods. This mod adds nothing special on its own. New functionality may be added at any time when needed by my mods.
 
 If you are developer and find the features useful, you can use it if you want. However, I cannot guarantee that everything will work as expected and will be supported in newer versions! Below there is a small tutorial on how to add this library as a dependency to your Forge Mod.
 
