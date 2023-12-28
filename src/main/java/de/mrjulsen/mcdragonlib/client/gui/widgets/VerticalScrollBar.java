@@ -154,6 +154,13 @@ public class VerticalScrollBar extends DragonLibWidgetBase implements IExtendedA
             onValueChanged.accept(this);
     }
 
+    public void scrollToRow(int pos) {
+        scroll = Mth.clamp(pos, 0, getMaxScroll());
+        
+        if (onValueChanged != null)
+            onValueChanged.accept(this);
+    }
+
     public boolean canScroll() {
         return maxScroll > 0;
     }

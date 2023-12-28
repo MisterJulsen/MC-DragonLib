@@ -154,6 +154,13 @@ public class HorizontalScrollBar extends DragonLibWidgetBase implements IExtende
             onValueChanged.accept(this);
     }
 
+    public void scrollToColumn(int pos) {
+        scroll = Mth.clamp(pos, 0, getMaxScroll());
+        
+        if (onValueChanged != null)
+            onValueChanged.accept(this);
+    }
+
     public boolean canScroll() {
         return maxScroll > 0;
     }
