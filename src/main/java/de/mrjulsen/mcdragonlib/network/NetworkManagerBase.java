@@ -6,10 +6,9 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 import de.mrjulsen.mcdragonlib.DragonLib;
-import net.minecraft.client.Minecraft;
+import net.minecraft.network.Connection;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkDirection;
@@ -73,12 +72,8 @@ public abstract class NetworkManagerBase<N extends NetworkManagerBase<N>> {
         MOD_CHANNEL.sendTo(o, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
     }
 
-    public <T> void sendToServer(IPacketBase<?> o) {
-        MOD_CHANNEL.sendTo(o, Minecraft.getInstance().getConnection().getConnection(), NetworkDirection.PLAY_TO_SERVER);
-    }
-
-    public <T> void send(IPacketBase<?> o, Player player) {
-        MOD_CHANNEL.sendTo(o, player instanceof ServerPlayer serverPlayer ? serverPlayer.connection.getConnection() : Minecraft.getInstance().getConnection().getConnection(), o.getDirection());
+    public <T> void sendToServer(Connection connection, IPacketBase<?> o) {
+        MOD_CHANNEL.sendTo(o, connection, NetworkDirection.PLAY_TO_SERVER);
     }
 
     public static void executeOnClient(Runnable task) {        

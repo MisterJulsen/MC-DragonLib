@@ -7,9 +7,11 @@ import com.mojang.math.Transformation;
 import com.mojang.math.Vector3f;
 import com.mojang.math.Vector4f;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
+import net.minecraft.network.Connection;
 import net.minecraftforge.client.model.pipeline.BakedQuadBuilder;
 /**
  * @see https://github.com/McJty/TutorialV3/blob/main/src/main/java/com/example/tutorialv3/varia/ClientTools.java
@@ -66,5 +68,9 @@ public class ClientTools {
      */
     public static Vector3f v(float x, float y, float z) {
         return new Vector3f(x, y, z);
+    }
+
+    public static Connection getConnection() {
+        return Minecraft.getInstance().getConnection().getConnection();
     }
 }

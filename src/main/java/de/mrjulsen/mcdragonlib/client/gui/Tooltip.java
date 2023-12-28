@@ -7,6 +7,7 @@ import java.util.List;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import de.mrjulsen.mcdragonlib.common.ITranslatableEnum;
+import de.mrjulsen.mcdragonlib.utils.Utils;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.FormattedText;
@@ -29,15 +30,15 @@ public class Tooltip {
     }
 
     public static Tooltip of(String text) {
-        return new Tooltip(text == null ? null : List.of(GuiUtils.text(text)));
+        return new Tooltip(text == null ? null : List.of(Utils.text(text)));
     }
 
     public static Tooltip of(Collection<String> text) {
-        return new Tooltip(text.stream().map(x -> (FormattedText)GuiUtils.text(x)).toList());
+        return new Tooltip(text.stream().map(x -> (FormattedText)Utils.text(x)).toList());
     }
 
     public static Tooltip of(String... texts) {
-        return new Tooltip(Arrays.stream(texts).map(x -> (FormattedText)GuiUtils.text(x)).toList());
+        return new Tooltip(Arrays.stream(texts).map(x -> (FormattedText)Utils.text(x)).toList());
     }
 
     public static Tooltip of(FormattedText formattedText) {

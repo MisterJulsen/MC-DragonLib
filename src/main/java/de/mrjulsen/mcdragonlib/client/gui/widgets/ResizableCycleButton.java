@@ -11,6 +11,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import de.mrjulsen.mcdragonlib.client.gui.GuiUtils;
+import de.mrjulsen.mcdragonlib.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractButton;
@@ -150,10 +151,10 @@ public class ResizableCycleButton<T> extends AbstractButton implements TooltipAc
             Component component = this.createLabelForValue(t);
             if (this.isFocused()) {
                 pNarrationElementOutput.add(NarratedElementType.USAGE,
-                        GuiUtils.translate("narration.cycle_button.usage.focused", component));
+                        Utils.translate("narration.cycle_button.usage.focused", component));
             } else {
                 pNarrationElementOutput.add(NarratedElementType.USAGE,
-                        GuiUtils.translate("narration.cycle_button.usage.hovered", component));
+                        Utils.translate("narration.cycle_button.usage.hovered", component));
             }
         }
 

@@ -25,6 +25,7 @@ import de.mrjulsen.mcdragonlib.client.gui.widgets.ModSlider;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ResizableButton;
 import de.mrjulsen.mcdragonlib.client.gui.widgets.ResizableCycleButton;
 import de.mrjulsen.mcdragonlib.common.ITranslatableEnum;
+import de.mrjulsen.mcdragonlib.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
@@ -34,10 +35,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 
 public final class GuiUtils {
@@ -139,10 +137,10 @@ public final class GuiUtils {
     public static <T extends Enum<T> & ITranslatableEnum> List<FormattedText> getEnumTooltipData(String modid, Screen screen, Class<T> enumClass, int maxWidth) {
         List<FormattedText> c = new ArrayList<>();
         T enumValue = enumClass.getEnumConstants()[0];
-        c.addAll(screen.getMinecraft().font.splitter.splitLines(translate(enumValue.getEnumDescriptionTranslationKey(modid)), maxWidth, Style.EMPTY).stream().toList());
-        c.add(text(" "));
+        c.addAll(screen.getMinecraft().font.splitter.splitLines(Utils.translate(enumValue.getEnumDescriptionTranslationKey(modid)), maxWidth, Style.EMPTY).stream().toList());
+        c.add(Utils.text(" "));
         c.addAll(Arrays.stream(enumClass.getEnumConstants()).map((tr) -> {
-            return text(String.format("§l> %s§r§7\n%s", translate(tr.getValueTranslationKey(modid)).getString(), translate(tr.getValueInfoTranslationKey(modid)).getString()));
+            return Utils.text(String.format("§l> %s§r§7\n%s", Utils.translate(tr.getValueTranslationKey(modid)).getString(), Utils.translate(tr.getValueInfoTranslationKey(modid)).getString()));
         }).map((x) -> screen.getMinecraft().font.splitter.splitLines(x, maxWidth, Style.EMPTY).stream().toList()).flatMap(List::stream).collect(Collectors.toList()));
         
         return c;
@@ -151,10 +149,10 @@ public final class GuiUtils {
     public static <T extends Enum<T> & ITranslatableEnum> List<FormattedText> getEnumTooltipData(String modid, Class<T> enumClass) {
         List<FormattedText> c = new ArrayList<>();
         T enumValue = enumClass.getEnumConstants()[0];
-        c.add(translate(enumValue.getEnumDescriptionTranslationKey(modid)));
-        c.add(text(" "));
+        c.add(Utils.translate(enumValue.getEnumDescriptionTranslationKey(modid)));
+        c.add(Utils.text(" "));
         c.addAll(Arrays.stream(enumClass.getEnumConstants()).map((tr) -> {
-            return text(String.format("§l> %s§r§7\n%s", translate(tr.getValueTranslationKey(modid)).getString(), translate(tr.getValueInfoTranslationKey(modid)).getString()));
+            return Utils.text(String.format("§l> %s§r§7\n%s", Utils.translate(tr.getValueTranslationKey(modid)).getString(), Utils.translate(tr.getValueInfoTranslationKey(modid)).getString()));
         }).toList());
         return c;
     }
@@ -271,7 +269,7 @@ public final class GuiUtils {
 
 	public static <T extends Enum<T> & ITranslatableEnum> ResizableCycleButton<T> createCycleButton(String modid, Class<T> clazz, int x, int y, int width, int height, Component text, T initialValue, BiConsumer<ResizableCycleButton<?>, T> onValueChanged) {
         ResizableCycleButton<T> btn = ResizableCycleButton.<T>builder((p) -> {            
-            return translate(clazz.cast(p).getValueTranslationKey(modid));
+            return Utils.translate(clazz.cast(p).getValueTranslationKey(modid));
         })
             .withValues(clazz.getEnumConstants()).withInitialValue(initialValue)
             .create(x, y, width, height, text, (b, v) -> onValueChanged.accept(b, v))
@@ -288,7 +286,7 @@ public final class GuiUtils {
 	}
 
     public static EditBox createEditBox(int x, int h, int width, int height, Font font, String text, boolean drawBg, Consumer<String> onValueChanged, BiConsumer<EditBox, Boolean> onFocusChanged) {
-        ModEditBox box = new ModEditBox(font, x, h, width, height, text(text));
+        ModEditBox box = new ModEditBox(font, x, h, width, height, Utils.text(text));
         box.setOnFocusChanged(onFocusChanged);
 		box.setResponder(onValueChanged);
         box.setValue(text);
@@ -304,9 +302,9 @@ public final class GuiUtils {
             protected void updateMessage() {
                 if (onUpdateMessage == null) {
                     if (this.drawString) {
-                        this.setMessage(text("").append(prefix).append(": ").append(this.getValueString()).append(suffix));
+                        this.setMessage(Utils.text("").append(prefix).append(": ").append(this.getValueString()).append(suffix));
                     } else {
-                        this.setMessage(TextComponent.EMPTY);
+                        this.setMessage(Utils.emptyText());
                     } 
                     return;
                 }                
@@ -321,18 +319,6 @@ public final class GuiUtils {
         };
         
 		return slider;
-    }
-
-    public static MutableComponent translate(String key, Object... args) {
-        return new TranslatableComponent(key, args);
-    }
-
-    public static MutableComponent translate(String key) {
-        return new TranslatableComponent(key);
-    }
-
-    public static MutableComponent text(String key) {
-        return new TextComponent(key);
     }
 
     public static void renderBoundingBox(PoseStack poseStack, GuiAreaDefinition area, int fillColor, int borderColor) {

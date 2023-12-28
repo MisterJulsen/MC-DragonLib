@@ -1,7 +1,6 @@
 package de.mrjulsen.mcdragonlib.utils;
 
 import de.mrjulsen.mcdragonlib.DragonLibConstants;
-import de.mrjulsen.mcdragonlib.client.gui.GuiUtils;
 import de.mrjulsen.mcdragonlib.common.ITranslatableEnum;
 import net.minecraft.util.StringRepresentable;
 
@@ -53,11 +52,11 @@ public final class TimeUtils {
         int minutes = time % 1000;
         minutes = (int)(minutes / (1000.0D / 60.0D));
         if (hours <= 0 && days <= 0) { 
-            return GuiUtils.translate(DragonLibConstants.DRAGONLIB_MODID + ".time_format.m", minutes).getString();
+            return Utils.translate(DragonLibConstants.DRAGONLIB_MODID + ".time_format.m", minutes).getString();
         } else if (days <= 0) { 
-            return GuiUtils.translate(DragonLibConstants.DRAGONLIB_MODID + ".time_format.hm", hours, minutes).getString();
+            return Utils.translate(DragonLibConstants.DRAGONLIB_MODID + ".time_format.hm", hours, minutes).getString();
         } else { 
-            return GuiUtils.translate(DragonLibConstants.DRAGONLIB_MODID + ".time_format.dhm", days, hours, minutes).getString();
+            return Utils.translate(DragonLibConstants.DRAGONLIB_MODID + ".time_format.dhm", days, hours, minutes).getString();
         }
     }
 

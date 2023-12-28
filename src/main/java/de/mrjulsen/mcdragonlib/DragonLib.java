@@ -2,7 +2,7 @@ package de.mrjulsen.mcdragonlib;
 
 import com.mojang.logging.LogUtils;
 
-import de.mrjulsen.mcdragonlib.internal.DragonLibClientProxy;
+import de.mrjulsen.mcdragonlib.internal.DragonLibClientProxyWrapper;
 import de.mrjulsen.mcdragonlib.internal.DragonLibServerProxy;
 import de.mrjulsen.mcdragonlib.internal.content.DragonLibBlocks;
 import de.mrjulsen.mcdragonlib.internal.content.DragonLibItems;
@@ -21,7 +21,7 @@ public final class DragonLib {
     public DragonLib() {
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         eventBus.addListener(DragonLibServerProxy::setup);
-        eventBus.addListener(DragonLibClientProxy::setup);
+        eventBus.addListener(DragonLibClientProxyWrapper::setup);
 
         DragonLibBlocks.register(eventBus);
         DragonLibItems.register(eventBus);

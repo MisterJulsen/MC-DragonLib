@@ -22,6 +22,10 @@ import de.mrjulsen.mcdragonlib.DragonLib;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
@@ -166,5 +170,21 @@ public final class Utils {
             return true;
         } else
             return false;
+    }
+
+    public static MutableComponent translate(String key, Object... args) {
+        return new TranslatableComponent(key, args);
+    }
+
+    public static MutableComponent translate(String key) {
+        return new TranslatableComponent(key);
+    }
+
+    public static MutableComponent text(String key) {
+        return new TextComponent(key);
+    }
+
+    public static Component emptyText() {
+        return TextComponent.EMPTY;
     }
 }

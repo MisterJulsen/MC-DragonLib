@@ -6,7 +6,7 @@ import java.util.Random;
 
 import com.google.gson.Gson;
 
-import de.mrjulsen.mcdragonlib.client.gui.GuiUtils;
+import de.mrjulsen.mcdragonlib.utils.Utils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -25,29 +25,29 @@ public class DragonLibConstants {
 
     public static final int DEFAULT_UI_FONT_COLOR = 4210752;
     
-    /** HERE BE DRAGONS! 🐉 */ public static final Component TEXT_DRAGON = GuiUtils.translate("text." + DRAGONLIB_MODID + ".dragon");
-    public static final Component TEXT_NEXT = GuiUtils.translate("text." + DRAGONLIB_MODID + ".next");
-    public static final Component TEXT_PREVIOUS = GuiUtils.translate("text." + DRAGONLIB_MODID + ".previous");
-    public static final Component TEXT_GO_BACK = GuiUtils.translate("text." + DRAGONLIB_MODID + ".go_back");
-    public static final Component TEXT_GO_FORTH = GuiUtils.translate("text." + DRAGONLIB_MODID + ".go_forth");    
-    public static final Component TEXT_GO_UP = GuiUtils.translate("text." + DRAGONLIB_MODID + ".go_down");
-    public static final Component TEXT_GO_DOWN = GuiUtils.translate("text." + DRAGONLIB_MODID + ".go_up");
-    public static final Component TEXT_GO_RIGHT= GuiUtils.translate("text." + DRAGONLIB_MODID + ".go_right");
-    public static final Component TEXT_GO_LEFT = GuiUtils.translate("text." + DRAGONLIB_MODID + ".go_left");
-    public static final Component TEXT_GO_TO_TOP = GuiUtils.translate("text." + DRAGONLIB_MODID + ".go_to_top");
-    public static final Component TEXT_GO_TO_BOTTOM = GuiUtils.translate("text." + DRAGONLIB_MODID + ".go_to_bottom");
-    public static final Component TEXT_RESET_DEFAULTS = GuiUtils.translate("text." + DRAGONLIB_MODID + ".reset_defaults");
-    public static final Component TEXT_EXPAND = GuiUtils.translate("text." + DRAGONLIB_MODID + ".expand");
-    public static final Component TEXT_COLLAPSE = GuiUtils.translate("text." + DRAGONLIB_MODID + ".collapse");
-    public static final Component TEXT_COUNT = GuiUtils.translate("text." + DRAGONLIB_MODID + ".count");
-    public static final Component TEXT_TRUE = GuiUtils.translate("text." + DRAGONLIB_MODID + ".true");
-    public static final Component TEXT_FALSE = GuiUtils.translate("text." + DRAGONLIB_MODID + ".false");
-    public static final Component TEXT_CLOSE = GuiUtils.translate("text." + DRAGONLIB_MODID + ".close");
-    public static final Component TEXT_SHOW = GuiUtils.translate("text." + DRAGONLIB_MODID + ".show");
-    public static final Component TEXT_HIDE = GuiUtils.translate("text." + DRAGONLIB_MODID + ".hide");
-    public static final Component TEXT_SEARCH = GuiUtils.translate("text." + DRAGONLIB_MODID + ".search");
-    public static final Component TEXT_REFRESH = GuiUtils.translate("text." + DRAGONLIB_MODID + ".refresh");
-    public static final Component TEXT_RELOAD = GuiUtils.translate("text." + DRAGONLIB_MODID + ".reload");
+    /** HERE BE DRAGONS! 🐉 */ public static final Component TEXT_DRAGON = Utils.translate("text." + DRAGONLIB_MODID + ".dragon");
+    public static final Component TEXT_NEXT = Utils.translate("text." + DRAGONLIB_MODID + ".next");
+    public static final Component TEXT_PREVIOUS = Utils.translate("text." + DRAGONLIB_MODID + ".previous");
+    public static final Component TEXT_GO_BACK = Utils.translate("text." + DRAGONLIB_MODID + ".go_back");
+    public static final Component TEXT_GO_FORTH = Utils.translate("text." + DRAGONLIB_MODID + ".go_forth");    
+    public static final Component TEXT_GO_UP = Utils.translate("text." + DRAGONLIB_MODID + ".go_down");
+    public static final Component TEXT_GO_DOWN = Utils.translate("text." + DRAGONLIB_MODID + ".go_up");
+    public static final Component TEXT_GO_RIGHT= Utils.translate("text." + DRAGONLIB_MODID + ".go_right");
+    public static final Component TEXT_GO_LEFT = Utils.translate("text." + DRAGONLIB_MODID + ".go_left");
+    public static final Component TEXT_GO_TO_TOP = Utils.translate("text." + DRAGONLIB_MODID + ".go_to_top");
+    public static final Component TEXT_GO_TO_BOTTOM = Utils.translate("text." + DRAGONLIB_MODID + ".go_to_bottom");
+    public static final Component TEXT_RESET_DEFAULTS = Utils.translate("text." + DRAGONLIB_MODID + ".reset_defaults");
+    public static final Component TEXT_EXPAND = Utils.translate("text." + DRAGONLIB_MODID + ".expand");
+    public static final Component TEXT_COLLAPSE = Utils.translate("text." + DRAGONLIB_MODID + ".collapse");
+    public static final Component TEXT_COUNT = Utils.translate("text." + DRAGONLIB_MODID + ".count");
+    public static final Component TEXT_TRUE = Utils.translate("text." + DRAGONLIB_MODID + ".true");
+    public static final Component TEXT_FALSE = Utils.translate("text." + DRAGONLIB_MODID + ".false");
+    public static final Component TEXT_CLOSE = Utils.translate("text." + DRAGONLIB_MODID + ".close");
+    public static final Component TEXT_SHOW = Utils.translate("text." + DRAGONLIB_MODID + ".show");
+    public static final Component TEXT_HIDE = Utils.translate("text." + DRAGONLIB_MODID + ".hide");
+    public static final Component TEXT_SEARCH = Utils.translate("text." + DRAGONLIB_MODID + ".search");
+    public static final Component TEXT_REFRESH = Utils.translate("text." + DRAGONLIB_MODID + ".refresh");
+    public static final Component TEXT_RELOAD = Utils.translate("text." + DRAGONLIB_MODID + ".reload");
 
     public static final Random RANDOM = new Random();
     public static final Gson GSON = new Gson();
