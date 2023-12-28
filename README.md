@@ -1,4 +1,4 @@
-# MC-DragonLib
+# DragonLib
 
 ![Logo](https://github.com/MisterJulsen/MC-DragonLib/blob/1.18.2/src/main/resources/mod_logo.png)
 
