@@ -15,7 +15,7 @@ If you are developer and find the features useful, you can use it if you want. H
 Feel free to join my Discord server for more information about my mods or to send bug reports, suggestions or to exchange with the community!
 
 ## **Setup a project using DragonLib**
-#### 1. Add the following repository and dependency to your `build.gradle`:
+#### 1. Add the following content to your `build.gradle`:
 
 ```groovy
 repositories {
@@ -40,3 +40,25 @@ Replace `<fileId>` with the id of the file you can find on [CurseForge](https://
     side="BOTH"
 ```
 Replace `<your_version>` with the minecraft version you are modding, e.g. `1.18.2`, and `<next_major_version>` with the next major version, e.g. `1.19`.
+
+## Mixin Refmap Remapping
+If you encounter errors when trying to start Minecraft from your development environment, it is necessary to remap the mixin refmap. Add the following code to each run configuration block.
+
+```groovy
+property 'mixin.env.remapRefMap', 'true'
+property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+```
+
+For example: Your client run configuration should look something like this:
+```groovy
+minecraft {
+    runs {
+        client {
+            // ...
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            // ...
+        }
+    }
+}
+```
