@@ -36,6 +36,11 @@
     "text.dragonlib.search": "Search",
     "text.dragonlib.refresh": "Refresh",
     "text.dragonlib.reload": "Reload",
+    
+    "gui.dragonlib.colorpicker.title": "Color Picker",
+    "gui.dragonlib.colorpicker.hsv": "HSV",
+    "gui.dragonlib.colorpicker.rgb": "RGB",
+    "gui.dragonlib.colorpicker.hex": "HEX",
 
     "item.dragonlib.dragon_item": "Dragon",
     "block.dragonlib.dragon": "Dragon"
