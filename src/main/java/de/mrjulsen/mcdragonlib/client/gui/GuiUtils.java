@@ -37,6 +37,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.gui.ScreenUtils;
 
 public final class GuiUtils {
 
@@ -91,7 +92,7 @@ public final class GuiUtils {
 		matrixStack.pushPose();
 		matrixStack.translate(x, y, 0);
 		matrixStack.scale(w, h, 1);
-		net.minecraftforge.client.gui.GuiUtils.drawGradientRect(matrixStack.last()
+		ScreenUtils.drawGradientRect(matrixStack.last()
 			.pose(), -100, 0, 0, 1, 1, 0xff000000, 0xff000000);
 		matrixStack.popPose();
 

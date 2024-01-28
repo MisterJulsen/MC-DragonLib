@@ -24,8 +24,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
@@ -173,18 +171,18 @@ public final class Utils {
     }
 
     public static MutableComponent translate(String key, Object... args) {
-        return new TranslatableComponent(key, args);
+        return Component.translatable(key, args);
     }
 
     public static MutableComponent translate(String key) {
-        return new TranslatableComponent(key);
+        return Component.translatable(key);
     }
 
     public static MutableComponent text(String key) {
-        return new TextComponent(key);
+        return Component.literal(key);
     }
 
     public static Component emptyText() {
-        return TextComponent.EMPTY;
+        return Component.empty();
     }
 }
