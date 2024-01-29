@@ -104,8 +104,8 @@ public abstract class CommonScreen extends net.minecraft.client.gui.screens.Scre
             addTooltip(tooltip.assignedTo(widget));
         }
 
-        widget.x = x;
-        widget.y = y;
+        widget.setX(x);
+        widget.setY(y);
         widget.setWidth(width);
         widget.setHeight(height);
         

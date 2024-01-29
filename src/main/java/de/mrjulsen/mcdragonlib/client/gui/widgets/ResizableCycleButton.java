@@ -15,7 +15,6 @@ import de.mrjulsen.mcdragonlib.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.AbstractButton;
-import net.minecraft.client.gui.components.TooltipAccessor;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
@@ -29,7 +28,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ResizableCycleButton<T> extends AbstractButton implements TooltipAccessor {
+public class ResizableCycleButton<T> extends AbstractButton {
     static final BooleanSupplier DEFAULT_ALT_LIST_SELECTOR = Screen::hasAltDown;
     private static final List<Boolean> BOOLEAN_OPTIONS = ImmutableList.of(Boolean.TRUE, Boolean.FALSE);
     private final Component name;
@@ -69,15 +68,15 @@ public class ResizableCycleButton<T> extends AbstractButton implements TooltipAc
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
-        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.x, this.y, 0, 46 + i * 20, this.width / 2, this.height / 2);
-        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height / 2);        
+        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.getX(), this.getY(), 0, 46 + i * 20, this.width / 2, this.height / 2);
+        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.getX() + this.width / 2, this.getY(), 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height / 2);        
 
-        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.x, this.y + this.height / 2, 0, 46 + (i + 1) * 20 - this.height / 2, this.width / 2, this.height / 2);
-        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.x + this.width / 2, this.y + this.height / 2, 200 - this.width / 2, 46 + (i + 1) * 20 - this.height / 2, this.width / 2, this.height / 2);
+        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.getX(), this.getY() + this.height / 2, 0, 46 + (i + 1) * 20 - this.height / 2, this.width / 2, this.height / 2);
+        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.getX() + this.width / 2, this.getY() + this.height / 2, 200 - this.width / 2, 46 + (i + 1) * 20 - this.height / 2, this.width / 2, this.height / 2);
 
         this.renderBg(pPoseStack, minecraft, pMouseX, pMouseY);
         int j = getFGColor();
-        drawCenteredString(pPoseStack, font, this.getMessage(), this.x + this.width / 2, this.y + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
+        drawCenteredString(pPoseStack, font, this.getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }
 
     public void onPress() {
@@ -144,7 +143,8 @@ public class ResizableCycleButton<T> extends AbstractButton implements TooltipAc
         return this.narrationProvider.apply(this);
     }
 
-    public void updateNarration(NarrationElementOutput pNarrationElementOutput) {
+    @Override
+    protected void updateWidgetNarration(NarrationElementOutput pNarrationElementOutput) {
         pNarrationElementOutput.add(NarratedElementType.TITLE, this.createNarrationMessage());
         if (this.active) {
             T t = this.getCycledValue(1);
@@ -157,7 +157,6 @@ public class ResizableCycleButton<T> extends AbstractButton implements TooltipAc
                         Utils.translate("narration.cycle_button.usage.hovered", component));
             }
         }
-
     }
 
     public MutableComponent createDefaultNarrationMessage() {

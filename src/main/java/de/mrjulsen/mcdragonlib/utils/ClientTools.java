@@ -1,8 +1,9 @@
 package de.mrjulsen.mcdragonlib.utils;
 
+import org.joml.Vector3f;
+import org.joml.Vector4f;
+
 import com.mojang.math.Transformation;
-import com.mojang.math.Vector3f;
-import com.mojang.math.Vector4f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -25,9 +26,9 @@ public class ClientTools {
     }
 
     public static BakedQuad createQuad(Vector3f v1, Vector3f v2, Vector3f v3, Vector3f v4, float u, float v, Transformation rotation, TextureAtlasSprite sprite) {
-        Vector3f normal = v3.copy();
+        Vector3f normal = new Vector3f(v3);
         normal.sub(v2);
-        Vector3f temp = v1.copy();
+        Vector3f temp = new Vector3f(v1);
         temp.sub(v2);
         normal.cross(temp);
         normal.normalize();
@@ -35,10 +36,10 @@ public class ClientTools {
         rotation = rotation.blockCenterToCorner();
         rotation.transformNormal(normal);
 
-        Vector4f vv1 = new Vector4f(v1); rotation.transformPosition(vv1);
-        Vector4f vv2 = new Vector4f(v2); rotation.transformPosition(vv2);
-        Vector4f vv3 = new Vector4f(v3); rotation.transformPosition(vv3);
-        Vector4f vv4 = new Vector4f(v4); rotation.transformPosition(vv4);
+        Vector4f vv1 = new Vector4f(v1, 0); rotation.transformPosition(vv1);
+        Vector4f vv2 = new Vector4f(v2, 0); rotation.transformPosition(vv2);
+        Vector4f vv3 = new Vector4f(v3, 0); rotation.transformPosition(vv3);
+        Vector4f vv4 = new Vector4f(v4, 0); rotation.transformPosition(vv4);
 
         BakedQuad[] quad = new BakedQuad[1];
         var builder = new QuadBakingVertexConsumer(q -> quad[0] = q);

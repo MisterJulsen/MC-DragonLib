@@ -197,5 +197,5 @@ public class VerticalScrollBar extends DragonLibWidgetBase implements IExtendedA
     @Override
     public boolean isInArea(double mouseX, double mouseY) {
         return scrollArea == null || isMouseOver(mouseX, mouseY) || scrollArea.isInBounds(mouseX, mouseY);
-    }  
+    }
 }
