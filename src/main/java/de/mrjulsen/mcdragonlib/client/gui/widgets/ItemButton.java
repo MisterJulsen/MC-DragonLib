@@ -70,14 +70,14 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
                 if (this.getMessage() != null) {
                     font.draw(pPoseStack, getMessage(), getX() + 2 + 16 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, getX() + 2, getY() + height / 2 - 8);
+                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack, item, getX() + 2, getY() + height / 2 - 8);
                 break;
             case RIGHT:
                 if (this.getMessage() != null) {
                     labelWidth = font.width(this.getMessage()) + 4;
                     font.draw(pPoseStack, getMessage(), getX() + width - 2 - labelWidth + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, getX() + width - 2 - labelWidth - 16, getY() + height / 2 - 8);
+                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack, item, getX() + width - 2 - labelWidth - 16, getY() + height / 2 - 8);
                 break;
             case CENTER:
             default:
@@ -85,7 +85,7 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
                     labelWidth = font.width(this.getMessage()) + 4;
                     font.draw(pPoseStack, getMessage(), getX() + width / 2 + 8 - labelWidth / 2 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(item, getX() + width / 2 - 8 - labelWidth / 2, getY() + height / 2 - 8);
+                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack,item, getX() + width / 2 - 8 - labelWidth / 2, getY() + height / 2 - 8);
                 break;
         }
         

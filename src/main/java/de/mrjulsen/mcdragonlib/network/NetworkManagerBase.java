@@ -69,7 +69,7 @@ public abstract class NetworkManagerBase<N extends NetworkManagerBase<N>> {
     }
 
     public <T> void sendToClient(IPacketBase<?> o, ServerPlayer player) {
-        MOD_CHANNEL.sendTo(o, player.connection.getConnection(), NetworkDirection.PLAY_TO_CLIENT);
+        MOD_CHANNEL.sendTo(o, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
     }
 
     public <T> void sendToServer(Connection connection, IPacketBase<?> o) {

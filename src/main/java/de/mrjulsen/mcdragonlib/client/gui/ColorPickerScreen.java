@@ -279,7 +279,7 @@ public class ColorPickerScreen extends CommonScreen {
     @Override
     public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
 
-        renderBackground(stack, 0);
+        renderBackground(stack);
 
         GuiUtils.blit(gui, stack, guiLeft, guiTop, 0, 0, WIDTH, HEIGHT);
 

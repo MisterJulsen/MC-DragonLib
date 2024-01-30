@@ -12,6 +12,7 @@ import de.mrjulsen.mcdragonlib.client.gui.DynamicGuiRenderer.AreaStyle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -122,11 +123,13 @@ public abstract class AbstractImageButton<T extends AbstractImageButton<T>> exte
         super.onPress();
     }
 
+
     @Override
-    public void renderButton(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void renderWidget(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft minecraft = Minecraft.getInstance();
         DynamicGuiRenderer.renderArea(pPoseStack, getX(), getY(), width, height, this.style, active ? (selected ? ButtonState.SUNKEN : (isHovered ? ButtonState.SELECTED : ButtonState.BUTTON)) : ButtonState.RAISED);
-        this.renderBg(pPoseStack, minecraft, pMouseX, pMouseY);
+        int i = getFGColor();
+        this.renderString(pPoseStack, minecraft.font, i | Mth.ceil(this.alpha * 255.0F) << 24);
         renderImage(pPoseStack, pMouseX, pMouseY, pPartialTick);
     }
 
