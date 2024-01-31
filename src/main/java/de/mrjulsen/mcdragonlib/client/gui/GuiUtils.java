@@ -85,7 +85,7 @@ public final class GuiUtils {
     /**
      * @see https://github.com/Creators-of-Create/Create/blob/mc1.20.1/dev/src/main/java/com/simibubi/create/content/trains/schedule/ScheduleScreen.java#L860
      */
-	protected void startStencil(GuiGraphics graphics, float x, float y, float w, float h) {
+	public static void startStencil(GuiGraphics graphics, float x, float y, float w, float h) {
 		RenderSystem.clear(GL30.GL_STENCIL_BUFFER_BIT | GL30.GL_DEPTH_BUFFER_BIT, Minecraft.ON_OSX);
 
 		GL11.glDisable(GL11.GL_STENCIL_TEST);
@@ -111,7 +111,7 @@ public final class GuiUtils {
     /**
      * @see https://github.com/Creators-of-Create/Create/blob/mc1.20.1/dev/src/main/java/com/simibubi/create/content/trains/schedule/ScheduleScreen.java#L860
      */
-	protected void endStencil() {
+	public static void endStencil() {
 		GL11.glDisable(GL11.GL_STENCIL_TEST);
 	}
 
