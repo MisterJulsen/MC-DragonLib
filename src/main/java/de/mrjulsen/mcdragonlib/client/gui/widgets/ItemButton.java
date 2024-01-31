@@ -68,22 +68,25 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
         switch (getAlignment()) {            
             case LEFT:
                 if (this.getMessage() != null) {
-                    font.draw(pPoseStack, getMessage(), getX() + 2 + 16 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    String txt = font.ellipsize(getMessage(), getWidth() - 4 - 16 - 4).getString();
+                    font.draw(pPoseStack, txt, getX() + 2 + 16 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
                 Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack, item, getX() + 2, getY() + height / 2 - 8);
                 break;
             case RIGHT:
                 if (this.getMessage() != null) {
-                    labelWidth = font.width(this.getMessage()) + 4;
-                    font.draw(pPoseStack, getMessage(), getX() + width - 2 - labelWidth + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    String txt = font.ellipsize(getMessage(), getWidth() - 4 - 16 - 4).getString();
+                    labelWidth = font.width(txt) + 4;
+                    font.draw(pPoseStack, txt, getX() + width - 2 - labelWidth + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
                 Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack, item, getX() + width - 2 - labelWidth - 16, getY() + height / 2 - 8);
                 break;
             case CENTER:
             default:
                 if (this.getMessage() != null) {
-                    labelWidth = font.width(this.getMessage()) + 4;
-                    font.draw(pPoseStack, getMessage(), getX() + width / 2 + 8 - labelWidth / 2 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    String txt = font.ellipsize(getMessage(), getWidth() - 4 - 16 - 4).getString();
+                    labelWidth = font.width(txt) + 4;
+                    font.draw(pPoseStack, txt, getX() + width / 2 + 8 - labelWidth / 2 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
                 Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack,item, getX() + width / 2 - 8 - labelWidth / 2, getY() + height / 2 - 8);
                 break;

@@ -51,22 +51,25 @@ public class IconButton extends AbstractImageButton<IconButton> {
         switch (getAlignment()) {            
             case LEFT:
                 if (this.getMessage() != null) {
-                    font.draw(pPoseStack, getMessage(), getX() + 2 + 4 + sprite.getWidth(), getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    String txt = font.ellipsize(getMessage(), getWidth() - 4 - sprite.getWidth() - 4).getString();
+                    font.draw(pPoseStack, txt, getX() + 2 + 4 + sprite.getWidth(), getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
                 sprite.render(pPoseStack, getX() + 2, getY() + height / 2 - sprite.getHeight() / 2);
                 break;
             case RIGHT:
                 if (this.getMessage() != null) {
-                    labelWidth = font.width(this.getMessage()) + 4;
-                    font.draw(pPoseStack, getMessage(), getX() + width - 2 + 4 - labelWidth, getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    String txt = font.ellipsize(getMessage(), getWidth() - 4 - sprite.getWidth() - 4).getString();
+                    labelWidth = font.width(txt) + 4;
+                    font.draw(pPoseStack, txt, getX() + width - 2 + 4 - labelWidth, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
                 sprite.render(pPoseStack, getX() + width - 2 - labelWidth - sprite.getWidth(), getY() + height / 2 - sprite.getHeight() / 2);
                 break;
             case CENTER:
             default:
                 if (this.getMessage() != null) {
-                    labelWidth = font.width(this.getMessage()) + 4;
-                    font.draw(pPoseStack, getMessage(), getX() + width / 2 + sprite.getWidth() / 2 - labelWidth / 2 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    String txt = font.ellipsize(getMessage(), getWidth() - 4 - sprite.getWidth() - 4).getString();
+                    labelWidth = font.width(txt) + 4;
+                    font.draw(pPoseStack, txt, getX() + width / 2 + sprite.getWidth() / 2 - labelWidth / 2 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
                 }
                 sprite.render(pPoseStack, getX() + width / 2 - sprite.getWidth() / 2 - labelWidth / 2, getY() + height / 2 - sprite.getHeight() / 2);
                 break;
