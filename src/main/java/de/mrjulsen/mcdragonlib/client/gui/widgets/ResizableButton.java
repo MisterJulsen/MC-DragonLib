@@ -49,11 +49,11 @@ public class ResizableButton extends Button {
         int i = 1;
         if (!this.active) {
            i = 0;
-        } else if (this.isHoveredOrFocused()) {
+        } else if (this.isHovered()) {
            i = 2;
         }
   
-        return 46 + i * 20;
+        return i;
      }
     
 }
