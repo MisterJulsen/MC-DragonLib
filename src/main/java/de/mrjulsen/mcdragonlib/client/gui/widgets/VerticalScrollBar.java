@@ -2,14 +2,13 @@ package de.mrjulsen.mcdragonlib.client.gui.widgets;
 
 import java.util.function.Consumer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import de.mrjulsen.mcdragonlib.client.gui.DynamicGuiRenderer.ButtonState;
 import de.mrjulsen.mcdragonlib.client.gui.DynamicGuiRenderer.AreaStyle;
 import de.mrjulsen.mcdragonlib.DragonLibConstants;
 import de.mrjulsen.mcdragonlib.client.gui.DynamicGuiRenderer;
 import de.mrjulsen.mcdragonlib.client.gui.GuiAreaDefinition;
 import de.mrjulsen.mcdragonlib.client.gui.GuiUtils;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -166,9 +165,9 @@ public class VerticalScrollBar extends DragonLibWidgetBase implements IExtendedA
     }
 
     @Override
-    public void renderWidget(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void renderWidget(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTick) {
         // Render background
-        DynamicGuiRenderer.renderArea(pPoseStack, x, y, width, height, AreaStyle.GRAY, ButtonState.SUNKEN);
+        DynamicGuiRenderer.renderArea(graphics, x, y, width, height, AreaStyle.GRAY, ButtonState.SUNKEN);
 
         // Render scrollbar
         int startU = canScroll() ? 20 : 25;
@@ -179,18 +178,18 @@ public class VerticalScrollBar extends DragonLibWidgetBase implements IExtendedA
         int w = width - 2;
         int h = scrollerHeight;
 
-        GuiUtils.blit(DragonLibConstants.UI, pPoseStack, x1, y1, 2, 2, startU, startV, 2, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // top left
-        GuiUtils.blit(DragonLibConstants.UI, pPoseStack, x1, y1 + h - 2, 2, 2, startU, startV + 3, 2, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // bottom left
-        GuiUtils.blit(DragonLibConstants.UI, pPoseStack, x1 + w - 2, y1, 2, 2, startU + 3, startV, 2, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // top right
-        GuiUtils.blit(DragonLibConstants.UI, pPoseStack, x1 + w - 2, y1 + h - 2, 2, 2, startU + 3, startV + 3, 2, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // bottom right
+        GuiUtils.blit(DragonLibConstants.UI, graphics, x1, y1, 2, 2, startU, startV, 2, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // top left
+        GuiUtils.blit(DragonLibConstants.UI, graphics, x1, y1 + h - 2, 2, 2, startU, startV + 3, 2, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // bottom left
+        GuiUtils.blit(DragonLibConstants.UI, graphics, x1 + w - 2, y1, 2, 2, startU + 3, startV, 2, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // top right
+        GuiUtils.blit(DragonLibConstants.UI, graphics, x1 + w - 2, y1 + h - 2, 2, 2, startU + 3, startV + 3, 2, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // bottom right
 
-        GuiUtils.blit(DragonLibConstants.UI, pPoseStack, x1 + 2, y1, w - 4, 2, startU + 2, startV, 1, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // top
-        GuiUtils.blit(DragonLibConstants.UI, pPoseStack, x1 + 2, y1 + h - 2, w - 4, 2, startU + 2, startV + 3, 1, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // bottom
-        GuiUtils.blit(DragonLibConstants.UI, pPoseStack, x1, y1 + 2, 2, h - 4, startU, startV + 2, 2, 1, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // left
-        GuiUtils.blit(DragonLibConstants.UI, pPoseStack, x1 + w - 2, y1 + 2, 2, h - 4, startU + 3, startV + 2, 2, 1, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // right
+        GuiUtils.blit(DragonLibConstants.UI, graphics, x1 + 2, y1, w - 4, 2, startU + 2, startV, 1, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // top
+        GuiUtils.blit(DragonLibConstants.UI, graphics, x1 + 2, y1 + h - 2, w - 4, 2, startU + 2, startV + 3, 1, 2, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // bottom
+        GuiUtils.blit(DragonLibConstants.UI, graphics, x1, y1 + 2, 2, h - 4, startU, startV + 2, 2, 1, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // left
+        GuiUtils.blit(DragonLibConstants.UI, graphics, x1 + w - 2, y1 + 2, 2, h - 4, startU + 3, startV + 2, 2, 1, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT); // right
         
         for (int i = 0; i < h - 4; i += 2) {
-            GuiUtils.blit(DragonLibConstants.UI, pPoseStack, x1 + 2, y1 + 2 + i, w - 4, i < h - 4 ? 2 : 1, startU + 2, startV + 2, 1, i < h - 4 ? 2 : 1, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT);
+            GuiUtils.blit(DragonLibConstants.UI, graphics, x1 + 2, y1 + 2 + i, w - 4, i < h - 4 ? 2 : 1, startU + 2, startV + 2, 1, i < h - 4 ? 2 : 1, DynamicGuiRenderer.TEXTURE_WIDTH, DynamicGuiRenderer.TEXTURE_HEIGHT);
         }
     }
 

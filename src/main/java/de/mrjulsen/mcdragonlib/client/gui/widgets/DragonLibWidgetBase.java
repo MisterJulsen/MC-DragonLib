@@ -1,10 +1,8 @@
 package de.mrjulsen.mcdragonlib.client.gui.widgets;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import de.mrjulsen.mcdragonlib.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
@@ -19,7 +17,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public abstract class DragonLibWidgetBase extends GuiComponent implements Renderable, GuiEventListener, NarratableEntry {
+public abstract class DragonLibWidgetBase implements Renderable, GuiEventListener, NarratableEntry {
 
     protected int width;
     protected int height;
@@ -44,9 +42,9 @@ public abstract class DragonLibWidgetBase extends GuiComponent implements Render
         return this.height;
     }
 
-    public void render(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void render(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTick) {
         if (this.visible) {            
-            this.renderWidget(pPoseStack, pMouseX, pMouseY, pPartialTick);
+            this.renderWidget(graphics, pMouseX, pMouseY, pPartialTick);
         }
     }
 
@@ -58,9 +56,9 @@ public abstract class DragonLibWidgetBase extends GuiComponent implements Render
         return Utils.translate("gui.narrate.button", pMessage);
     }
 
-    public abstract void renderWidget(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick);
+    public abstract void renderWidget(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTick);
 
-    protected void renderBg(PoseStack pPoseStack, Minecraft pMinecraft, int pMouseX, int pMouseY) { }
+    protected void renderBg(GuiGraphics graphics, Minecraft pMinecraft, int pMouseX, int pMouseY) { }
 
     public boolean onClick(double pMouseX, double pMouseY) {
         return false;
@@ -133,7 +131,7 @@ public abstract class DragonLibWidgetBase extends GuiComponent implements Render
         return this.active && this.visible && pMouseX >= (double) this.x && pMouseY >= (double) this.y && pMouseX < (double) (this.x + this.width) && pMouseY < (double) (this.y + this.height);
     }
 
-    public void renderToolTip(PoseStack pPoseStack, int pMouseX, int pMouseY) { }
+    public void renderToolTip(GuiGraphics graphics, int pMouseX, int pMouseY) { }
 
     public void playDownSound(SoundManager pHandler) {
         pHandler.play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));

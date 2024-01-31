@@ -2,13 +2,12 @@ package de.mrjulsen.mcdragonlib.client.gui.widgets;
 
 import java.util.function.Consumer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import de.mrjulsen.mcdragonlib.client.gui.Sprite;
 import de.mrjulsen.mcdragonlib.client.gui.WidgetsCollection;
 import de.mrjulsen.mcdragonlib.client.gui.DynamicGuiRenderer.AreaStyle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,33 +44,33 @@ public class IconButton extends AbstractImageButton<IconButton> {
 
     @Override
     @SuppressWarnings("resource")
-    public void renderImage(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void renderImage(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTick) {
         Font font = Minecraft.getInstance().font;
         int labelWidth = 0;
         switch (getAlignment()) {            
             case LEFT:
                 if (this.getMessage() != null) {
                     String txt = font.ellipsize(getMessage(), getWidth() - 4 - sprite.getWidth() - 4).getString();
-                    font.draw(pPoseStack, txt, getX() + 2 + 4 + sprite.getWidth(), getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    graphics.drawString(font, txt, getX() + 2 + 4 + sprite.getWidth(), getY() + height / 2 - font.lineHeight / 2, getFontColor(), false);
                 }
-                sprite.render(pPoseStack, getX() + 2, getY() + height / 2 - sprite.getHeight() / 2);
+                sprite.render(graphics, getX() + 2, getY() + height / 2 - sprite.getHeight() / 2);
                 break;
             case RIGHT:
                 if (this.getMessage() != null) {
                     String txt = font.ellipsize(getMessage(), getWidth() - 4 - sprite.getWidth() - 4).getString();
                     labelWidth = font.width(txt) + 4;
-                    font.draw(pPoseStack, txt, getX() + width - 2 + 4 - labelWidth, getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    graphics.drawString(font, txt, getX() + width - 2 + 4 - labelWidth, getY() + height / 2 - font.lineHeight / 2, getFontColor(), false);
                 }
-                sprite.render(pPoseStack, getX() + width - 2 - labelWidth - sprite.getWidth(), getY() + height / 2 - sprite.getHeight() / 2);
+                sprite.render(graphics, getX() + width - 2 - labelWidth - sprite.getWidth(), getY() + height / 2 - sprite.getHeight() / 2);
                 break;
             case CENTER:
             default:
                 if (this.getMessage() != null) {
                     String txt = font.ellipsize(getMessage(), getWidth() - 4 - sprite.getWidth() - 4).getString();
                     labelWidth = font.width(txt) + 4;
-                    font.draw(pPoseStack, txt, getX() + width / 2 + sprite.getWidth() / 2 - labelWidth / 2 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    graphics.drawString(font, txt, getX() + width / 2 + sprite.getWidth() / 2 - labelWidth / 2 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor(), false);
                 }
-                sprite.render(pPoseStack, getX() + width / 2 - sprite.getWidth() / 2 - labelWidth / 2, getY() + height / 2 - sprite.getHeight() / 2);
+                sprite.render(graphics, getX() + width / 2 - sprite.getWidth() / 2 - labelWidth / 2, getY() + height / 2 - sprite.getHeight() / 2);
                 break;
         }
     }

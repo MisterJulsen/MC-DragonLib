@@ -1,8 +1,7 @@
 package de.mrjulsen.mcdragonlib.client.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import de.mrjulsen.mcdragonlib.DragonLibConstants;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
 public class DynamicGuiRenderer {
@@ -13,11 +12,11 @@ public class DynamicGuiRenderer {
     public static final int TEXTURE_HEIGHT = 32;
     protected static final int UI_SECTION_SIZE = 5;
 
-    public static void renderArea(PoseStack poseStack, GuiAreaDefinition area, AreaStyle style, ButtonState state) {
-        renderArea(poseStack, area.getLeft(), area.getTop(), area.getWidth(), area.getHeight(), style, state);
+    public static void renderArea(GuiGraphics graphics, GuiAreaDefinition area, AreaStyle style, ButtonState state) {
+        renderArea(graphics, area.getLeft(), area.getTop(), area.getWidth(), area.getHeight(), style, state);
     }
 
-    public static void renderArea(PoseStack poseStack, int x, int y, int w, int h, AreaStyle color, ButtonState style) {
+    public static void renderArea(GuiGraphics graphics, int x, int y, int w, int h, AreaStyle color, ButtonState style) {
 
         if (color == AreaStyle.NATIVE) {
             int i = 0;
@@ -34,64 +33,64 @@ public class DynamicGuiRenderer {
                     break;
             }
 
-            GuiUtils.blit(NATIVE_WIDGETS, poseStack, x, y, 0, 46 + i * 20, w / 2, h / 2);
-            GuiUtils.blit(NATIVE_WIDGETS, poseStack, x + w / 2, y, 200 - w / 2, 46 + i * 20, w / 2, h / 2);       
-            GuiUtils.blit(NATIVE_WIDGETS, poseStack, x, y + h / 2, 0, 46 + (i + 1) * 20 - h / 2, w / 2, h / 2);
-            GuiUtils.blit(NATIVE_WIDGETS, poseStack, x + w / 2, y + h / 2, 200 - w / 2, 46 + (i + 1) * 20 - h / 2, w / 2, h / 2);
+            GuiUtils.blit(NATIVE_WIDGETS, graphics, x, y, 0, 46 + i * 20, w / 2, h / 2);
+            GuiUtils.blit(NATIVE_WIDGETS, graphics, x + w / 2, y, 200 - w / 2, 46 + i * 20, w / 2, h / 2);       
+            GuiUtils.blit(NATIVE_WIDGETS, graphics, x, y + h / 2, 0, 46 + (i + 1) * 20 - h / 2, w / 2, h / 2);
+            GuiUtils.blit(NATIVE_WIDGETS, graphics, x + w / 2, y + h / 2, 200 - w / 2, 46 + (i + 1) * 20 - h / 2, w / 2, h / 2);
         }
 
         int startU = 0, startV = color.getIndex() * 5;
         startU += style.getIndex() * UI_SECTION_SIZE;
-        GuiUtils.blit(UI, poseStack, x, y, 2, 2, startU, startV, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top left
-        GuiUtils.blit(UI, poseStack, x, y + h - 2, 2, 2, startU, startV + 3, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom left
-        GuiUtils.blit(UI, poseStack, x + w - 2, y, 2, 2, startU + 3, startV, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top right
-        GuiUtils.blit(UI, poseStack, x + w - 2, y + h - 2, 2, 2, startU + 3, startV + 3, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom right
+        GuiUtils.blit(UI, graphics, x, y, 2, 2, startU, startV, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top left
+        GuiUtils.blit(UI, graphics, x, y + h - 2, 2, 2, startU, startV + 3, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom left
+        GuiUtils.blit(UI, graphics, x + w - 2, y, 2, 2, startU + 3, startV, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top right
+        GuiUtils.blit(UI, graphics, x + w - 2, y + h - 2, 2, 2, startU + 3, startV + 3, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom right
 
-        GuiUtils.blit(UI, poseStack, x + 2, y, w - 4, 2, startU + 2, startV, 1, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top
-        GuiUtils.blit(UI, poseStack, x + 2, y + h - 2, w - 4, 2, startU + 2, startV + 3, 1, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom
-        GuiUtils.blit(UI, poseStack, x, y + 2, 2, h - 4, startU, startV + 2, 2, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT); // left
-        GuiUtils.blit(UI, poseStack, x + w - 2, y + 2, 2, h - 4, startU + 3, startV + 2, 2, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT); // right
+        GuiUtils.blit(UI, graphics, x + 2, y, w - 4, 2, startU + 2, startV, 1, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top
+        GuiUtils.blit(UI, graphics, x + 2, y + h - 2, w - 4, 2, startU + 2, startV + 3, 1, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom
+        GuiUtils.blit(UI, graphics, x, y + 2, 2, h - 4, startU, startV + 2, 2, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT); // left
+        GuiUtils.blit(UI, graphics, x + w - 2, y + 2, 2, h - 4, startU + 3, startV + 2, 2, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT); // right
         
-        GuiUtils.blit(UI, poseStack, x + 2, y + 2, w - 4, h - 4, startU + 2, startV + 2, 1, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT);
+        GuiUtils.blit(UI, graphics, x + 2, y + 2, w - 4, h - 4, startU + 2, startV + 2, 1, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT);
     }
 
-    public static void renderContainerBackground(PoseStack poseStack, GuiAreaDefinition area) {
-        renderContainerBackground(poseStack, area.getLeft(), area.getTop(), area.getWidth(), area.getHeight());
+    public static void renderContainerBackground(GuiGraphics graphics, GuiAreaDefinition area) {
+        renderContainerBackground(graphics, area.getLeft(), area.getTop(), area.getWidth(), area.getHeight());
     }
 
-    public static void renderContainerBackground(PoseStack poseStack, int x, int y, int w, int h) {
+    public static void renderContainerBackground(GuiGraphics graphics, int x, int y, int w, int h) {
         int startU = 10, startV = 15;
-        GuiUtils.blit(UI, poseStack, x, y, 2, 2, startU, startV, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top left
-        GuiUtils.blit(UI, poseStack, x, y + h - 2, 2, 2, startU, startV + 3, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom left
-        GuiUtils.blit(UI, poseStack, x + w - 2, y, 2, 2, startU + 3, startV, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top right
-        GuiUtils.blit(UI, poseStack, x + w - 2, y + h - 2, 2, 2, startU + 3, startV + 3, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom right
+        GuiUtils.blit(UI, graphics, x, y, 2, 2, startU, startV, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top left
+        GuiUtils.blit(UI, graphics, x, y + h - 2, 2, 2, startU, startV + 3, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom left
+        GuiUtils.blit(UI, graphics, x + w - 2, y, 2, 2, startU + 3, startV, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top right
+        GuiUtils.blit(UI, graphics, x + w - 2, y + h - 2, 2, 2, startU + 3, startV + 3, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom right
 
-        GuiUtils.blit(UI, poseStack, x + 2, y, w - 4, 2, startU + 2, startV, 1, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top
-        GuiUtils.blit(UI, poseStack, x + 2, y + h - 2, w - 4, 2, startU + 2, startV + 3, 1, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom
-        GuiUtils.blit(UI, poseStack, x, y + 2, 2, h - 4, startU, startV + 2, 2, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT); // left
-        GuiUtils.blit(UI, poseStack, x + w - 2, y + 2, 2, h - 4, startU + 3, startV + 2, 2, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT); // right
+        GuiUtils.blit(UI, graphics, x + 2, y, w - 4, 2, startU + 2, startV, 1, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top
+        GuiUtils.blit(UI, graphics, x + 2, y + h - 2, w - 4, 2, startU + 2, startV + 3, 1, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom
+        GuiUtils.blit(UI, graphics, x, y + 2, 2, h - 4, startU, startV + 2, 2, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT); // left
+        GuiUtils.blit(UI, graphics, x + w - 2, y + 2, 2, h - 4, startU + 3, startV + 2, 2, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT); // right
         
-        GuiUtils.blit(UI, poseStack, x + 2, y + 2, w - 4, h - 4, startU + 2, startV + 2, 1, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT);
+        GuiUtils.blit(UI, graphics, x + 2, y + 2, w - 4, h - 4, startU + 2, startV + 2, 1, 1, TEXTURE_WIDTH, TEXTURE_HEIGHT);
     }
 
-    public static void renderWindow(PoseStack poseStack, GuiAreaDefinition area) {
-        renderWindow(poseStack, area.getLeft(), area.getTop(), area.getWidth(), area.getHeight());
+    public static void renderWindow(GuiGraphics graphics, GuiAreaDefinition area) {
+        renderWindow(graphics, area.getLeft(), area.getTop(), area.getWidth(), area.getHeight());
     }
 
-    public static void renderWindow(PoseStack poseStack, int x, int y, int w, int h) {
+    public static void renderWindow(GuiGraphics graphics, int x, int y, int w, int h) {
         int startU = 0, startV = 15;
 
-        GuiUtils.blit(UI, poseStack, x, y, 4, 4, startU, startV, 4, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top left
-        GuiUtils.blit(UI, poseStack, x, y + h - 4, 4, 4, startU, startV + 6, 4, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom left
-        GuiUtils.blit(UI, poseStack, x + w - 4, y, 4, 4, startU + 6, startV, 4, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top right
-        GuiUtils.blit(UI, poseStack, x + w - 4, y + h - 4, 4, 4, startU + 6, startV + 6, 4, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom right
+        GuiUtils.blit(UI, graphics, x, y, 4, 4, startU, startV, 4, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top left
+        GuiUtils.blit(UI, graphics, x, y + h - 4, 4, 4, startU, startV + 6, 4, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom left
+        GuiUtils.blit(UI, graphics, x + w - 4, y, 4, 4, startU + 6, startV, 4, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top right
+        GuiUtils.blit(UI, graphics, x + w - 4, y + h - 4, 4, 4, startU + 6, startV + 6, 4, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom right
 
-        GuiUtils.blit(UI, poseStack, x + 4, y, w - 8, 4, startU + 4, startV, 2, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top
-        GuiUtils.blit(UI, poseStack, x + 4, y + h - 4, w - 8, 4, startU + 4, startV + 6, 2, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom
-        GuiUtils.blit(UI, poseStack, x, y + 4, 4, h - 8, startU, startV + 4, 4, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // left
-        GuiUtils.blit(UI, poseStack, x + w - 4, y + 4, 4, h - 8, startU + 6, startV + 4, 4, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // right
+        GuiUtils.blit(UI, graphics, x + 4, y, w - 8, 4, startU + 4, startV, 2, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // top
+        GuiUtils.blit(UI, graphics, x + 4, y + h - 4, w - 8, 4, startU + 4, startV + 6, 2, 4, TEXTURE_WIDTH, TEXTURE_HEIGHT); // bottom
+        GuiUtils.blit(UI, graphics, x, y + 4, 4, h - 8, startU, startV + 4, 4, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // left
+        GuiUtils.blit(UI, graphics, x + w - 4, y + 4, 4, h - 8, startU + 6, startV + 4, 4, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT); // right
         
-        GuiUtils.blit(UI, poseStack, x + 4, y + 4, w - 8, h - 8, startU + 4, startV + 4, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT);
+        GuiUtils.blit(UI, graphics, x + 4, y + 4, w - 8, h - 8, startU + 4, startV + 4, 2, 2, TEXTURE_WIDTH, TEXTURE_HEIGHT);
     }
 
     public static enum ButtonState {

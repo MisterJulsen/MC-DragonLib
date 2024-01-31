@@ -3,13 +3,13 @@ package de.mrjulsen.mcdragonlib.client.gui;
 import java.util.Locale;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import de.mrjulsen.mcdragonlib.DragonLibConstants;
 import de.mrjulsen.mcdragonlib.client.ColorObject;
 import de.mrjulsen.mcdragonlib.client.gui.wrapper.CommonScreen;
 import de.mrjulsen.mcdragonlib.utils.Utils;
 import io.netty.util.internal.shaded.org.jctools.queues.MessagePassingQueue.Consumer;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
@@ -277,38 +277,38 @@ public class ColorPickerScreen extends CommonScreen {
     }
 
     @Override
-    public void render(PoseStack stack, int mouseX, int mouseY, float partialTicks) {
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 
-        renderBackground(stack);
+        renderBackground(graphics);
 
-        GuiUtils.blit(gui, stack, guiLeft, guiTop, 0, 0, WIDTH, HEIGHT);
+        GuiUtils.blit(gui, graphics, guiLeft, guiTop, 0, 0, WIDTH, HEIGHT);
 
         for (int i = 0; i < COLOR_PICKER_WIDTH; i++) {
             ColorObject ch = getH(i, COLOR_PICKER_WIDTH);
             ColorObject cs = getS(h, i, COLOR_PICKER_WIDTH);
             ColorObject cv = getV(h, i, COLOR_PICKER_WIDTH);
-            fill(stack, guiLeft + 9 + i, guiTop + 41, guiLeft + 9 + i + 1, guiTop + 57, ch.toInt());
-            fill(stack, guiLeft + 9 + i, guiTop + 67, guiLeft + 9 + i + 1, guiTop + 83, cs.toInt());
-            fill(stack, guiLeft + 9 + i, guiTop + 93, guiLeft + 9 + i + 1, guiTop + 109, cv.toInt());
+            graphics.fill(guiLeft + 9 + i, guiTop + 41, guiLeft + 9 + i + 1, guiTop + 57, ch.toInt());
+            graphics.fill(guiLeft + 9 + i, guiTop + 67, guiLeft + 9 + i + 1, guiTop + 83, cs.toInt());
+            graphics.fill(guiLeft + 9 + i, guiTop + 93, guiLeft + 9 + i + 1, guiTop + 109, cv.toInt());
 
         }
         
         // Preview
-        fill(stack, guiLeft + 197, guiTop + 10, guiLeft + 197 + 22, guiTop + 10 + 24, ColorObject.fromHSV(h, s, v).toInt());
-        fill(stack, guiLeft + 197 + 22, guiTop + 10, guiLeft + 197 + 44, guiTop + 10 + 24, currentColor);
+        graphics.fill(guiLeft + 197, guiTop + 10, guiLeft + 197 + 22, guiTop + 10 + 24, ColorObject.fromHSV(h, s, v).toInt());
+        graphics.fill(guiLeft + 197 + 22, guiTop + 10, guiLeft + 197 + 44, guiTop + 10 + 24, currentColor);
 
         String title = getTitle().getString();
-        this.font.draw(stack, textHSV, guiLeft + 9, guiTop + 28, 4210752);
-        this.font.draw(stack, title, guiLeft + WIDTH / 2 - font.width(title) / 2, guiTop + 6, 4210752);
-        this.font.draw(stack, textRGB, guiLeft + 9, guiTop + 119, 4210752);
-        this.font.draw(stack, textInteger, guiLeft + 9, guiTop + 139, 4210752);
+        graphics.drawString(font, textHSV, guiLeft + 9, guiTop + 28, 4210752, false);
+        graphics.drawString(font, title, guiLeft + WIDTH / 2 - font.width(title) / 2, guiTop + 6, 4210752, false);
+        graphics.drawString(font, textRGB, guiLeft + 9, guiTop + 119, 4210752, false);
+        graphics.drawString(font, textInteger, guiLeft + 9, guiTop + 139, 4210752, false);
 
         // Draw selections
-        GuiUtils.blit(gui, stack, guiLeft + 5 + (int)(h * COLOR_PICKER_WIDTH), guiTop + 38, inSliderH(mouseX, mouseY) ? SELECTION_W : 0, SELECTION_Y, SELECTION_W, SELECTION_H);
-        GuiUtils.blit(gui, stack, guiLeft + 5 + (int)(s * COLOR_PICKER_WIDTH), guiTop + 64, inSliderS(mouseX, mouseY) ? SELECTION_W : 0, SELECTION_Y, SELECTION_W, SELECTION_H);
-        GuiUtils.blit(gui, stack, guiLeft + 5 + (int)(v * COLOR_PICKER_WIDTH), guiTop + 90, inSliderV(mouseX, mouseY) ? SELECTION_W : 0, SELECTION_Y, SELECTION_W, SELECTION_H);
+        GuiUtils.blit(gui, graphics, guiLeft + 5 + (int)(h * COLOR_PICKER_WIDTH), guiTop + 38, inSliderH(mouseX, mouseY) ? SELECTION_W : 0, SELECTION_Y, SELECTION_W, SELECTION_H);
+        GuiUtils.blit(gui, graphics, guiLeft + 5 + (int)(s * COLOR_PICKER_WIDTH), guiTop + 64, inSliderS(mouseX, mouseY) ? SELECTION_W : 0, SELECTION_Y, SELECTION_W, SELECTION_H);
+        GuiUtils.blit(gui, graphics, guiLeft + 5 + (int)(v * COLOR_PICKER_WIDTH), guiTop + 90, inSliderV(mouseX, mouseY) ? SELECTION_W : 0, SELECTION_Y, SELECTION_W, SELECTION_H);
 
-        super.render(stack, mouseX, mouseY, partialTicks);
+        super.render(graphics, mouseX, mouseY, partialTicks);
     }
 
     @Override

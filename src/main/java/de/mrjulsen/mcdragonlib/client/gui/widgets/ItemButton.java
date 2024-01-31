@@ -2,13 +2,12 @@ package de.mrjulsen.mcdragonlib.client.gui.widgets;
 
 import java.util.function.Consumer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import de.mrjulsen.mcdragonlib.client.gui.GuiUtils;
 import de.mrjulsen.mcdragonlib.client.gui.WidgetsCollection;
 import de.mrjulsen.mcdragonlib.client.gui.DynamicGuiRenderer.AreaStyle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -62,46 +61,46 @@ public class ItemButton extends AbstractImageButton<ItemButton> {
 
     @Override
     @SuppressWarnings("resource")
-    public void renderImage(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void renderImage(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTick) {
         Font font = Minecraft.getInstance().font;
         int labelWidth = 0;
         switch (getAlignment()) {            
             case LEFT:
                 if (this.getMessage() != null) {
                     String txt = font.ellipsize(getMessage(), getWidth() - 4 - 16 - 4).getString();
-                    font.draw(pPoseStack, txt, getX() + 2 + 16 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    graphics.drawString(font, txt, getX() + 2 + 16 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor(), false);
                 }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack, item, getX() + 2, getY() + height / 2 - 8);
+                graphics.renderItem(item, getX() + 2, getY() + height / 2 - 8);
                 break;
             case RIGHT:
                 if (this.getMessage() != null) {
                     String txt = font.ellipsize(getMessage(), getWidth() - 4 - 16 - 4).getString();
                     labelWidth = font.width(txt) + 4;
-                    font.draw(pPoseStack, txt, getX() + width - 2 - labelWidth + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    graphics.drawString(font, txt, getX() + width - 2 - labelWidth + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor(), false);
                 }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack, item, getX() + width - 2 - labelWidth - 16, getY() + height / 2 - 8);
+                graphics.renderItem(item, getX() + width - 2 - labelWidth - 16, getY() + height / 2 - 8);
                 break;
             case CENTER:
             default:
                 if (this.getMessage() != null) {
                     String txt = font.ellipsize(getMessage(), getWidth() - 4 - 16 - 4).getString();
                     labelWidth = font.width(txt) + 4;
-                    font.draw(pPoseStack, txt, getX() + width / 2 + 8 - labelWidth / 2 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor());
+                    graphics.drawString(font, txt, getX() + width / 2 + 8 - labelWidth / 2 + 4, getY() + height / 2 - font.lineHeight / 2, getFontColor(), false);
                 }
-                Minecraft.getInstance().getItemRenderer().renderAndDecorateItem(pPoseStack,item, getX() + width / 2 - 8 - labelWidth / 2, getY() + height / 2 - 8);
+                graphics.renderItem(item, getX() + width / 2 - 8 - labelWidth / 2, getY() + height / 2 - 8);
                 break;
         }
         
     }
 
-    public void renderTooltip(Screen parent, PoseStack pPoseStack, int pMouseX, int pMouseY) {
+    public void renderTooltip(Screen parent, GuiGraphics graphics, int pMouseX, int pMouseY) {
         if (isMouseOver(pMouseX, pMouseY) && renderItemTooltip) {
-            GuiUtils.renderTooltip(parent, this, parent.getTooltipFromItem(getItem()), -1, pPoseStack, pMouseX, pMouseY);
+            GuiUtils.renderTooltip(parent, this, Screen.getTooltipFromItem(Minecraft.getInstance(), getItem()), -1, graphics, pMouseX, pMouseY);
         }
     }
 
-    public static void renderAllItemButtonTooltips(Screen parent, PoseStack pPoseStack, int pMouseX, int pMouseY) {
-        parent.renderables.stream().filter(x -> x instanceof ItemButton b && b.isMouseOver(pMouseX, pMouseY) && b.renderItemTooltip).forEach(x -> ((ItemButton)x).renderTooltip(parent, pPoseStack, pMouseX, pMouseY));
+    public static void renderAllItemButtonTooltips(Screen parent, GuiGraphics graphics, int pMouseX, int pMouseY) {
+        parent.renderables.stream().filter(x -> x instanceof ItemButton b && b.isMouseOver(pMouseX, pMouseY) && b.renderItemTooltip).forEach(x -> ((ItemButton)x).renderTooltip(parent, graphics, pMouseX, pMouseY));
     }
 }
 

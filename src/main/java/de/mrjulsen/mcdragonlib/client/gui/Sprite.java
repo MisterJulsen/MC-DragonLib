@@ -1,7 +1,6 @@
 package de.mrjulsen.mcdragonlib.client.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
 
@@ -71,11 +70,11 @@ public class Sprite {
         return new Sprite(TextureManager.INTENTIONAL_MISSING_TEXTURE, 0, 0, 0, 0, 0, 0);
     }
 
-    public void render(PoseStack pPoseStack, int x, int y) {
+    public void render(GuiGraphics graphics, int x, int y) {
         if (texture == null) {
-            GuiUtils.blit(textureId, pPoseStack, x + renderOffsetX, y + renderOffsetY, renderWidth, renderHeight, u, v, spriteWidth, spriteHeight, textureWidth, textureHeight);            
+            GuiUtils.blit(textureId, graphics, x + renderOffsetX, y + renderOffsetY, renderWidth, renderHeight, u, v, spriteWidth, spriteHeight, textureWidth, textureHeight);            
         } else {
-            GuiUtils.blit(texture, pPoseStack, x + renderOffsetX, y + renderOffsetY, renderWidth, renderHeight, u, v, spriteWidth, spriteHeight, textureWidth, textureHeight);
+            GuiUtils.blit(texture, graphics, x + renderOffsetX, y + renderOffsetY, renderWidth, renderHeight, u, v, spriteWidth, spriteHeight, textureWidth, textureHeight);
         }
     }
 

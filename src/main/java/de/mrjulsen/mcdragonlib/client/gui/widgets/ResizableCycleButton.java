@@ -8,12 +8,12 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 
 import de.mrjulsen.mcdragonlib.client.gui.GuiUtils;
 import de.mrjulsen.mcdragonlib.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -38,7 +38,6 @@ public class ResizableCycleButton<T> extends AbstractButton {
     private final Function<T, Component> valueStringifier;
     private final Function<ResizableCycleButton<T>, MutableComponent> narrationProvider;
     private final ResizableCycleButton.OnValueChange<T> onValueChange;
-    private final ResizableCycleButton.TooltipSupplier<T> tooltipSupplier;
     private final boolean displayOnlyValue;
 
     ResizableCycleButton(int pX, int pY, int pWidth, int pHeight, Component pMessage, Component pName, int pIndex,
@@ -54,12 +53,11 @@ public class ResizableCycleButton<T> extends AbstractButton {
         this.valueStringifier = pValueStringifier;
         this.narrationProvider = pNarrationProvider;
         this.onValueChange = pOnValueChange;
-        this.tooltipSupplier = pTooltipSupplier;
         this.displayOnlyValue = pDisplayOnlyValue;
     }
 
     @Override
-    public void renderWidget(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
+    public void renderWidget(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTick) {
         Minecraft minecraft = Minecraft.getInstance();
         Font font = minecraft.font;
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -68,16 +66,16 @@ public class ResizableCycleButton<T> extends AbstractButton {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.enableDepthTest();
-        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.getX(), this.getY(), 0, 46 + i * 20, this.width / 2, this.height / 2);
-        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.getX() + this.width / 2, this.getY(), 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height / 2);        
+        GuiUtils.blit(WIDGETS_LOCATION, graphics, this.getX(), this.getY(), 0, 46 + i * 20, this.width / 2, this.height / 2);
+        GuiUtils.blit(WIDGETS_LOCATION, graphics, this.getX() + this.width / 2, this.getY(), 200 - this.width / 2, 46 + i * 20, this.width / 2, this.height / 2);        
 
-        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.getX(), this.getY() + this.height / 2, 0, 46 + (i + 1) * 20 - this.height / 2, this.width / 2, this.height / 2);
-        GuiUtils.blit(WIDGETS_LOCATION, pPoseStack, this.getX() + this.width / 2, this.getY() + this.height / 2, 200 - this.width / 2, 46 + (i + 1) * 20 - this.height / 2, this.width / 2, this.height / 2);
+        GuiUtils.blit(WIDGETS_LOCATION, graphics, this.getX(), this.getY() + this.height / 2, 0, 46 + (i + 1) * 20 - this.height / 2, this.width / 2, this.height / 2);
+        GuiUtils.blit(WIDGETS_LOCATION, graphics, this.getX() + this.width / 2, this.getY() + this.height / 2, 200 - this.width / 2, 46 + (i + 1) * 20 - this.height / 2, this.width / 2, this.height / 2);
 
         int k = getFGColor();
-        this.renderString(pPoseStack, minecraft.font, k | Mth.ceil(this.alpha * 255.0F) << 24);
+        this.renderString(graphics, minecraft.font, k | Mth.ceil(this.alpha * 255.0F) << 24);
         int j = getFGColor();
-        drawCenteredString(pPoseStack, font, this.getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
+        graphics.drawCenteredString(font, this.getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, j | Mth.ceil(this.alpha * 255.0F) << 24);
     }
 
     private int getTextureY() {
@@ -174,11 +172,7 @@ public class ResizableCycleButton<T> extends AbstractButton {
     public MutableComponent createDefaultNarrationMessage() {
         return wrapDefaultNarrationMessage(
                 (Component) (this.displayOnlyValue ? this.createFullName(this.value) : this.getMessage()));
-    }
-
-    public List<FormattedCharSequence> getTooltip() {
-        return this.tooltipSupplier.apply(this.value);
-    }
+    }    
 
     public static <T> ResizableCycleButton.Builder<T> builder(Function<T, Component> pValueStringifier) {
         return new ResizableCycleButton.Builder<>(pValueStringifier);

@@ -2,13 +2,12 @@ package de.mrjulsen.mcdragonlib.client.gui.widgets;
 
 import java.util.function.Consumer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import de.mrjulsen.mcdragonlib.DragonLibConstants;
 import de.mrjulsen.mcdragonlib.client.gui.DynamicGuiRenderer;
 import de.mrjulsen.mcdragonlib.client.gui.WidgetsCollection;
 import de.mrjulsen.mcdragonlib.client.gui.DynamicGuiRenderer.ButtonState;
 import de.mrjulsen.mcdragonlib.client.gui.DynamicGuiRenderer.AreaStyle;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
@@ -121,14 +120,13 @@ public abstract class AbstractImageButton<T extends AbstractImageButton<T>> exte
         super.onPress();
     }
 
-
     @Override
-    public void renderWidget(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick) {
-        DynamicGuiRenderer.renderArea(pPoseStack, getX(), getY(), width, height, this.style, active ? (selected ? ButtonState.SUNKEN : (isHovered ? ButtonState.SELECTED : ButtonState.BUTTON)) : ButtonState.RAISED);
-        renderImage(pPoseStack, pMouseX, pMouseY, pPartialTick);
+    public void renderWidget(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTick) {
+        DynamicGuiRenderer.renderArea(graphics, getX(), getY(), width, height, this.style, active ? (selected ? ButtonState.SUNKEN : (isHovered ? ButtonState.SELECTED : ButtonState.BUTTON)) : ButtonState.RAISED);
+        renderImage(graphics, pMouseX, pMouseY, pPartialTick);
     }
 
-    public abstract void renderImage(PoseStack pPoseStack, int pMouseX, int pMouseY, float pPartialTick);
+    public abstract void renderImage(GuiGraphics graphics, int pMouseX, int pMouseY, float pPartialTick);
 
     public enum ButtonType {
         DEFAULT,
